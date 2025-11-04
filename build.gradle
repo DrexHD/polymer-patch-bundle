@@ -69,6 +69,8 @@ publishMods {
 		accessToken = providers.environmentVariable("MODRINTH_TOKEN")
 		projectId = "WhjutnwJ"
 		minecraftVersions.add(project.minecraft_version)
+		requires("polymer")
+		optional("blockus", "terrestria", "cinderscapes", "traverse")
 	}
 
 	github {
