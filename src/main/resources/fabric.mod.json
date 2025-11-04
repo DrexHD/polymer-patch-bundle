@@ -1,26 +1,26 @@
 {
-	"schemaVersion": 1,
-	"id": "terraform-polymer-patch",
-	"version": "${version}",
-	"name": "Polymer Patch for mods using Terraform api",
-	"description": "Polymer Patch for mods using Terraform api",
-	"authors": [
-		"Drex"
-	],
-	"license": "MIT",
-	"icon": "assets/terraform-polymer-patch/icon.png",
-	"environment": "*",
-	"entrypoints": {
-		"main": [
-          "me.drex.terraformpatch.TerraformerPatch"
-		]
-	},
-	"mixins": [
-		"terraform-polymer-patch.mixins.json"
-	],
-	"depends": {
-		"fabricloader": ">=0.17.2",
-		"java": ">=21",
-		"fabric-api": "*"
-	}
+  "schemaVersion": 1,
+  "id": "polymer-patch-bundle",
+  "version": "${version}",
+  "name": "Polymer Patch Bundle",
+  "description": "Polymer Patch for blockus, terrestria, cinderscapes, traverse and woods_and_mires",
+  "authors": [
+    "Drex"
+  ],
+  "license": "MIT",
+  "icon": "assets/polymer-patch-bundle/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "me.drex.ppb.PolymerPatchBundleMod"
+    ]
+  },
+  "mixins": [
+    "polymer-patch-bundle.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.17.2",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
 }

@@ -64,6 +64,12 @@ publishMods {
 
 	displayName = "terraform-patch ${version.get()}"
 
+	modrinth {
+		accessToken = providers.environmentVariable("MODRINTH_TOKEN")
+		projectId = "WhjutnwJ"
+		minecraftVersions.add(project.minecraft_version)
+	}
+
 	github {
 		accessToken = providers.environmentVariable("GITHUB_TOKEN")
 		repository = providers.environmentVariable("GITHUB_REPOSITORY").getOrElse("DrexHD/terraform-patch")

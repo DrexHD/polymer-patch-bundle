@@ -1,0 +1,46 @@
+package me.drex.ppb.block.mod;
+
+import com.brand.blockus.blocks.base.*;
+import com.brand.blockus.blocks.base.asphalt.AsphaltBlock;
+import eu.pb4.polymer.blocks.api.BlockModelType;
+import eu.pb4.polymer.core.api.block.PolymerBlock;
+import me.drex.ppb.block.type.*;
+import me.drex.ppb.block.type.WallPolymerBlock;
+import me.drex.ppb.res.ResourcePackGenerator;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.level.block.*;
+import org.jetbrains.annotations.Nullable;
+
+public class BlockusPolymerBlockHelper implements ModPolymerBlockHelper {
+    public static final BlockusPolymerBlockHelper INSTANCE = new BlockusPolymerBlockHelper();
+
+    @Override
+    public @Nullable PolymerBlock requestPolymerBlock(ResourceLocation id, Block block) {
+
+        return switch (block) {
+            case IronBarsBlock ignored -> BarsPolymerBlock.INSTANCE;
+            case ChainBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.CHAIN);
+            case PostBlock ignored -> ResourcePackGenerator.expandBlockModel(id, PostPolymerBlock.INSTANCE);
+            case WeatheringCopperFullBlock ignored -> BaseFactoryBlock.BARRIER;
+            case StainedGlassBlock ignored -> BaseFactoryBlock.BARRIER;
+            case ColoredTilesBlock ignored -> BaseFactoryBlock.BARRIER;
+            case RotatedPillarBlock ignored -> BaseFactoryBlock.BARRIER;
+            case SmallHedgeBlock ignored -> WallPolymerBlock.HEDGE;
+            case Barrier ignored -> WallPolymerBlock.BARRIER;
+            case OrientableBlockBase ignored -> BaseFactoryBlock.BARRIER;
+            case RedstoneLampBlock ignored -> BaseFactoryBlock.BARRIER;
+            case LargeFlowerPotBlock ignored -> BaseFactoryBlock.BARRIER;
+            case PaperLampBlock ignored -> BaseFactoryBlock.BARRIER;
+            case LanternBlock ignored -> BaseFactoryBlock.BARRIER;
+            case TransparentBlock ignored -> BaseFactoryBlock.BARRIER;
+            case CarvedPumpkinBlock ignored -> BaseFactoryBlock.BARRIER;
+            case SpongeBlock ignored -> BaseFactoryBlock.BARRIER;
+            case LoveBlock ignored -> BaseFactoryBlock.BARRIER;
+            case SimpleFallingBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            case FullFacingBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            case AmethystBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            case AsphaltBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            default -> null;
+        };
+    }
+}
