@@ -63,6 +63,7 @@ publishMods {
 	changelog = providers.environmentVariable("CHANGELOG").getOrElse("No changelog provided")
 
 	displayName = "terraform-patch ${version.get()}"
+	modLoaders.addAll("fabric", "quilt")
 
 	modrinth {
 		accessToken = providers.environmentVariable("MODRINTH_TOKEN")
