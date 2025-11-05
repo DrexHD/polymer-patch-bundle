@@ -35,7 +35,6 @@ public record StateCopyFactoryBlock(Block clientBlock,
     public static final StateCopyFactoryBlock BUTTON = new StateCopyFactoryBlock(Blocks.STONE_BUTTON, ShiftyBlockStateModel::shortRange);
     public static final StateCopyFactoryBlock PRESSURE_PLATE = new StateCopyFactoryBlock(Blocks.STONE_PRESSURE_PLATE, ShiftyBlockStateModel::shortRange);
     public static final StateCopyFactoryBlock CARPET = new StateCopyFactoryBlock(Blocks.WHITE_CARPET, ShiftyBlockStateModel::shortRange);
-    public static final StateCopyFactoryBlock CHAIN = new StateCopyFactoryBlock(Blocks.IRON_CHAIN, ShiftyBlockStateModel::shortRange);
     public static final StateCopyFactoryBlock SHELF = new StateCopyFactoryBlock(Blocks.BIRCH_SHELF, ShiftyBlockStateModel::shortRange);
 
     @Override

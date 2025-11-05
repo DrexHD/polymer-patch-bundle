@@ -18,12 +18,11 @@ public class BlockusPolymerBlockHelper implements ModPolymerBlockHelper {
     public @Nullable PolymerBlock requestPolymerBlock(ResourceLocation id, Block block) {
 
         return switch (block) {
-            case IronBarsBlock ignored -> BarsPolymerBlock.INSTANCE;
-            case ChainBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.CHAIN);
             case PostBlock ignored -> ResourcePackGenerator.expandBlockModel(id, PostPolymerBlock.INSTANCE);
             case WeatheringCopperFullBlock ignored -> BaseFactoryBlock.BARRIER;
             case StainedGlassBlock ignored -> BaseFactoryBlock.BARRIER;
             case ColoredTilesBlock ignored -> BaseFactoryBlock.BARRIER;
+            case ChainBlock ignored -> ChainPolymerBlock.INSTANCE;
             case RotatedPillarBlock ignored -> BaseFactoryBlock.BARRIER;
             case SmallHedgeBlock ignored -> WallPolymerBlock.HEDGE;
             case Barrier ignored -> WallPolymerBlock.BARRIER;

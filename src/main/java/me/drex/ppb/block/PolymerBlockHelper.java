@@ -71,6 +71,8 @@ public class PolymerBlockHelper {
             case CeilingHangingSignBlock ignored -> StateCopyFactoryBlock.HANGING_SIGN;
             case StandingSignBlock ignored -> StateCopyFactoryBlock.SIGN;
             case DoorBlock ignored -> DoorPolymerBlock.INSTANCE;
+            case IronBarsBlock ignored -> BarsPolymerBlock.INSTANCE;
+            case ChainBlock ignored -> ChainPolymerBlock.INSTANCE;
             case LanternBlock ignored -> LanternPolymerBlock.INSTANCE;
             case TrapDoorBlock ignored -> TrapdoorPolymerBlock.INSTANCE;
             case SlabBlock ignored -> SlabPolymerBlock.of(id);
