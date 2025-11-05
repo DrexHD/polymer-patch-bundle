@@ -1,5 +1,6 @@
 package me.drex.ppb.block.mod;
 
+import com.terraformersmc.terrestria.block.BasaltGrassBlock;
 import com.terraformersmc.terrestria.block.CattailBlock;
 import com.terraformersmc.terrestria.block.SaguaroCactusBlock;
 import com.terraformersmc.terrestria.block.TallCattailBlock;
@@ -9,9 +10,9 @@ import me.drex.ppb.block.type.BaseFactoryBlock;
 import me.drex.ppb.block.type.StatePolymerBlock;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.Nullable;
 
-// TODO andisol_grass_block
 public class TerrestriaPolymerBlockHelper implements ModPolymerBlockHelper {
     public static final TerrestriaPolymerBlockHelper INSTANCE = new TerrestriaPolymerBlockHelper();
 
@@ -22,6 +23,7 @@ public class TerrestriaPolymerBlockHelper implements ModPolymerBlockHelper {
 
         return switch (block) {
             case SaguaroCactusBlock ignored -> BaseFactoryBlock.CACTUS;
+            case BasaltGrassBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.BIOME_TRANSPARENT_BLOCK, StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK), state -> !state.getValue(BlockStateProperties.SNOWY));
             case CattailBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.KELP_BLOCK);
             case TallCattailBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.KELP_BLOCK);
             default -> null;
