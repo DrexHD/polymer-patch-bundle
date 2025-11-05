@@ -2,10 +2,10 @@ package me.drex.ppb.block.type;
 
 import eu.pb4.factorytools.api.block.FactoryBlock;
 import eu.pb4.factorytools.api.block.model.generic.BSMMParticleBlock;
-import eu.pb4.factorytools.api.block.model.generic.BlockStateModel;
 import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import juuxel.woodsandmires.block.BranchBlock;
+import me.drex.ppb.block.BlockStateModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -37,7 +37,7 @@ public record BranchPolymerBlock() implements FactoryBlock, PolymerTexturedBlock
 
     @Override
     public @Nullable ElementHolder createElementHolder(ServerLevel world, BlockPos pos, BlockState initialBlockState) {
-        return BlockStateModel.midRange(initialBlockState, pos);
+        return BlockStateModel.midRange();
     }
 
     @Override

@@ -3,10 +3,10 @@ package me.drex.ppb.block.type;
 import eu.pb4.factorytools.api.block.FactoryBlock;
 import eu.pb4.factorytools.api.block.model.SignModel;
 import eu.pb4.factorytools.api.block.model.generic.BSMMParticleBlock;
-import eu.pb4.factorytools.api.block.model.generic.ShiftyBlockStateModel;
 import eu.pb4.factorytools.api.virtualentity.BlockModel;
 import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
+import me.drex.ppb.block.BlockStateModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -28,14 +28,14 @@ public record StateCopyFactoryBlock(Block clientBlock,
     public static final StateCopyFactoryBlock HANGING_SIGN = new StateCopyFactoryBlock(Blocks.BIRCH_HANGING_SIGN, SignModel::new);
     public static final StateCopyFactoryBlock HANGING_WALL_SIGN = new StateCopyFactoryBlock(Blocks.BIRCH_WALL_HANGING_SIGN, SignModel::new);
 
-    public static final StateCopyFactoryBlock WALL = new StateCopyFactoryBlock(Blocks.SANDSTONE_WALL, ShiftyBlockStateModel::midRange);
-    public static final StateCopyFactoryBlock STAIR = new StateCopyFactoryBlock(Blocks.SANDSTONE_STAIRS, ShiftyBlockStateModel::midRange);
-    public static final StateCopyFactoryBlock FENCE = new StateCopyFactoryBlock(Blocks.BIRCH_FENCE, ShiftyBlockStateModel::midRange);
-    public static final StateCopyFactoryBlock FENCE_GATE = new StateCopyFactoryBlock(Blocks.BIRCH_FENCE_GATE, ShiftyBlockStateModel::midRange);
-    public static final StateCopyFactoryBlock BUTTON = new StateCopyFactoryBlock(Blocks.STONE_BUTTON, ShiftyBlockStateModel::shortRange);
-    public static final StateCopyFactoryBlock PRESSURE_PLATE = new StateCopyFactoryBlock(Blocks.STONE_PRESSURE_PLATE, ShiftyBlockStateModel::shortRange);
-    public static final StateCopyFactoryBlock CARPET = new StateCopyFactoryBlock(Blocks.WHITE_CARPET, ShiftyBlockStateModel::shortRange);
-    public static final StateCopyFactoryBlock SHELF = new StateCopyFactoryBlock(Blocks.BIRCH_SHELF, ShiftyBlockStateModel::shortRange);
+    public static final StateCopyFactoryBlock WALL = new StateCopyFactoryBlock(Blocks.SANDSTONE_WALL, (state, blockPos) -> BlockStateModel.midRange().shifty());
+    public static final StateCopyFactoryBlock STAIR = new StateCopyFactoryBlock(Blocks.SANDSTONE_STAIRS, (state, blockPos) -> BlockStateModel.midRange().shifty());
+    public static final StateCopyFactoryBlock FENCE = new StateCopyFactoryBlock(Blocks.BIRCH_FENCE, (state, blockPos) -> BlockStateModel.midRange().shifty());
+    public static final StateCopyFactoryBlock FENCE_GATE = new StateCopyFactoryBlock(Blocks.BIRCH_FENCE_GATE, (state, blockPos) -> BlockStateModel.midRange().shifty());
+    public static final StateCopyFactoryBlock BUTTON = new StateCopyFactoryBlock(Blocks.STONE_BUTTON, (state, blockPos) -> BlockStateModel.shortRange().shifty());
+    public static final StateCopyFactoryBlock PRESSURE_PLATE = new StateCopyFactoryBlock(Blocks.STONE_PRESSURE_PLATE, (state, blockPos) -> BlockStateModel.shortRange().shifty());
+    public static final StateCopyFactoryBlock CARPET = new StateCopyFactoryBlock(Blocks.WHITE_CARPET, (state, blockPos) -> BlockStateModel.shortRange().shifty());
+    public static final StateCopyFactoryBlock SHELF = new StateCopyFactoryBlock(Blocks.BIRCH_SHELF, (state, blockPos) -> BlockStateModel.shortRange().shifty());
 
     @Override
     public BlockState getPolymerBlockState(BlockState state, PacketContext context) {

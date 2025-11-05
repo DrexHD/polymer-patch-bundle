@@ -2,11 +2,11 @@ package me.drex.ppb.block.type;
 
 import eu.pb4.factorytools.api.block.FactoryBlock;
 import eu.pb4.factorytools.api.block.model.generic.BSMMParticleBlock;
-import eu.pb4.factorytools.api.block.model.generic.BlockStateModel;
 import eu.pb4.polymer.blocks.api.BlockModelType;
 import eu.pb4.polymer.blocks.api.PolymerBlockResourceUtils;
 import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
+import me.drex.ppb.block.BlockStateModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -34,7 +34,6 @@ public record PostPolymerBlock() implements FactoryBlock, PolymerTexturedBlock, 
         }
     }
 
-
     @Override
     public BlockState getPolymerBlockState(BlockState blockState, PacketContext context) {
         Direction.Axis axis = blockState.getValueOrElse(BlockStateProperties.AXIS, Direction.Axis.X);
@@ -48,7 +47,7 @@ public record PostPolymerBlock() implements FactoryBlock, PolymerTexturedBlock, 
 
     @Override
     public @NotNull ElementHolder createElementHolder(ServerLevel world, BlockPos pos, BlockState initialBlockState) {
-        return BlockStateModel.shortRange(initialBlockState, pos);
+        return BlockStateModel.shortRange();
     }
 
     @Override

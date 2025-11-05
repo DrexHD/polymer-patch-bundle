@@ -12,6 +12,8 @@ import eu.pb4.polymer.virtualentity.api.attachment.BlockAwareAttachment;
 import eu.pb4.polymer.virtualentity.impl.HolderHolder;
 import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
+import me.drex.ppb.color.ColorProviderRegistry;
+import me.drex.ppb.color.ColorMapHelper;
 import me.drex.ppb.res.ResourceHelper;
 import me.drex.ppb.res.ResourcePackGenerator;
 import net.fabricmc.api.ModInitializer;
@@ -44,6 +46,8 @@ public class PolymerPatchBundleMod implements ModInitializer {
     public void onInitialize() {
         PolymerResourcePackUtils.RESOURCE_PACK_CREATION_EVENT.register(ResourceHelper::init);
         ResourcePackGenerator.setup();
+        ColorMapHelper.init();
+        ColorProviderRegistry.init();
 
         for (String modNamespace : MOD_NAMESPACES) {
             setupModAssets(modNamespace);
@@ -81,12 +85,14 @@ public class PolymerPatchBundleMod implements ModInitializer {
 
     public static void setupModAssets(String modid) {
         ResourcePackExtras.forDefault().addBridgedModelsFolder(
-            ResourceLocation.fromNamespaceAndPath(modid, "block"),
             ResourceLocation.fromNamespaceAndPath(modid, "block_sign")
         );
-        ResourcePackExtras.forDefault().addBridgedModelsFolder(ResourceLocation.fromNamespaceAndPath(modid, "entity"), (id, b) -> {
-            return new ItemAsset(new BasicItemModel(id, List.of(new MapColorTintSource(0xFFFFFF))), new ItemAsset.Properties(true, true));
-        });
+        ResourcePackExtras.forDefault().addBridgedModelsFolder(
+            ResourceLocation.fromNamespaceAndPath(modid, "block"),
+            (id, resourcePackBuilder) -> {
+                return new ItemAsset(new BasicItemModel(id, List.of(new MapColorTintSource(0xFFFFFF))), ItemAsset.Properties.DEFAULT);
+            }
+        );
     }
 
     public static ResourceLocation id(String path) {

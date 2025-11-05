@@ -3,11 +3,11 @@ package me.drex.ppb.block.type;
 import com.terraformersmc.cinderscapes.block.PolypiteQuartzBlock;
 import eu.pb4.factorytools.api.block.FactoryBlock;
 import eu.pb4.factorytools.api.block.model.generic.BSMMParticleBlock;
-import eu.pb4.factorytools.api.block.model.generic.BlockStateModel;
 import eu.pb4.polymer.blocks.api.BlockModelType;
 import eu.pb4.polymer.blocks.api.PolymerBlockResourceUtils;
 import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
+import me.drex.ppb.block.BlockStateModel;
 import net.minecraft.Util;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -39,7 +39,7 @@ public record PolypiteQuartzBlockPolymerBlock() implements FactoryBlock, Polymer
 
     @Override
     public @Nullable ElementHolder createElementHolder(ServerLevel world, BlockPos pos, BlockState initialBlockState) {
-        return BlockStateModel.midRange(initialBlockState, pos);
+        return BlockStateModel.midRange();
     }
 
     @Override

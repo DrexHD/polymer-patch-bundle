@@ -2,12 +2,12 @@ package me.drex.ppb.block.type;
 
 import eu.pb4.factorytools.api.block.model.generic.BSMMParticleBlock;
 import eu.pb4.factorytools.api.block.FactoryBlock;
-import eu.pb4.factorytools.api.block.model.generic.ShiftyBlockStateModel;
 import eu.pb4.polymer.blocks.api.BlockModelType;
 import eu.pb4.polymer.blocks.api.PolymerBlockResourceUtils;
 import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import me.drex.ppb.PolymerPatchBundleMod;
+import me.drex.ppb.block.BlockStateModel;
 import me.drex.ppb.block.PolymerBlockHelper;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
@@ -80,7 +80,7 @@ public record SlabPolymerBlock(BlockState bottomState,
         if (slabType == SlabType.BOTTOM && vanillaState != null) {
             return null;
         }
-        return ShiftyBlockStateModel.midRange(initialBlockState, pos);
+        return BlockStateModel.midRange();
     }
 
     @Override

@@ -2,12 +2,12 @@ package me.drex.ppb.block.type;
 
 import eu.pb4.factorytools.api.block.FactoryBlock;
 import eu.pb4.factorytools.api.block.model.generic.BSMMParticleBlock;
-import eu.pb4.factorytools.api.block.model.generic.BlockStateModel;
 import eu.pb4.factorytools.api.virtualentity.BlockModel;
 import eu.pb4.polymer.blocks.api.BlockModelType;
 import eu.pb4.polymer.blocks.api.PolymerBlockResourceUtils;
 import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
+import me.drex.ppb.block.BlockStateModel;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -30,9 +30,9 @@ public record BaseFactoryBlock(Function<BlockState, BlockState> blockStateFuncti
         this(state -> clientState, tick, modelFunction);
     }
 
-    public static final BaseFactoryBlock BARRIER = new BaseFactoryBlock(blockState -> Blocks.BARRIER.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, blockState.getValueOrElse(BlockStateProperties.WATERLOGGED, false)), false, BlockStateModel::longRange);
-    public static final BaseFactoryBlock POT = new BaseFactoryBlock(Blocks.FLOWER_POT.defaultBlockState(), false, BlockStateModel::midRange);
-    public static final BaseFactoryBlock PLANT = new BaseFactoryBlock(PolymerBlockResourceUtils.requestEmpty(BlockModelType.PLANT_BLOCK), false, BlockStateModel::midRange);
+    public static final BaseFactoryBlock BARRIER = new BaseFactoryBlock(blockState -> Blocks.BARRIER.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, blockState.getValueOrElse(BlockStateProperties.WATERLOGGED, false)), false, (state, blockPos) -> BlockStateModel.longRange());
+    public static final BaseFactoryBlock POT = new BaseFactoryBlock(Blocks.FLOWER_POT.defaultBlockState(), false, (state, blockPos) -> BlockStateModel.midRange());
+    public static final BaseFactoryBlock PLANT = new BaseFactoryBlock(PolymerBlockResourceUtils.requestEmpty(BlockModelType.PLANT_BLOCK), false, (state, blockPos) -> BlockStateModel.midRange());
     public static final BaseFactoryBlock CACTUS = new BaseFactoryBlock(Blocks.CACTUS.defaultBlockState(), false, (blockState, blockPos) -> null);
 
     @Override

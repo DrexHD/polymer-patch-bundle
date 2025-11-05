@@ -2,11 +2,11 @@ package me.drex.ppb.block.type;
 
 import eu.pb4.factorytools.api.block.model.generic.BSMMParticleBlock;
 import eu.pb4.factorytools.api.block.FactoryBlock;
-import eu.pb4.factorytools.api.block.model.generic.BlockStateModel;
 import eu.pb4.polymer.blocks.api.BlockModelType;
 import eu.pb4.polymer.blocks.api.PolymerBlockResourceUtils;
 import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
+import me.drex.ppb.block.BlockStateModel;
 import org.jetbrains.annotations.Nullable;
 import xyz.nucleoid.packettweaker.PacketContext;
 
@@ -49,7 +49,7 @@ public record TrapdoorPolymerBlock() implements FactoryBlock, PolymerTexturedBlo
 
     @Override
     public @Nullable ElementHolder createElementHolder(ServerLevel world, BlockPos pos, BlockState initialBlockState) {
-        return BlockStateModel.midRange(initialBlockState, pos);
+        return BlockStateModel.midRange();
     }
 
     @Override
