@@ -31,7 +31,6 @@ public class BlockusPolymerBlockHelper implements ModPolymerBlockHelper {
             case RedstoneLampBlock ignored -> BaseFactoryBlock.BARRIER;
             case LargeFlowerPotBlock ignored -> BaseFactoryBlock.BARRIER;
             case PaperLampBlock ignored -> BaseFactoryBlock.BARRIER;
-            case LanternBlock ignored -> BaseFactoryBlock.BARRIER;
             case TransparentBlock ignored -> BaseFactoryBlock.BARRIER;
             case CarvedPumpkinBlock ignored -> BaseFactoryBlock.BARRIER;
             case SpongeBlock ignored -> BaseFactoryBlock.BARRIER;
