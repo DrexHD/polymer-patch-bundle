@@ -2,6 +2,7 @@ package me.drex.ppb.block.mod;
 
 import com.brand.blockus.blocks.base.*;
 import com.brand.blockus.blocks.base.asphalt.AsphaltBlock;
+import com.terraformersmc.cinderscapes.block.PolypiteQuartzBlock;
 import eu.pb4.polymer.blocks.api.BlockModelType;
 import eu.pb4.polymer.core.api.block.PolymerBlock;
 import me.drex.ppb.block.type.*;
@@ -16,14 +17,14 @@ public class BlockusPolymerBlockHelper implements ModPolymerBlockHelper {
 
     @Override
     public @Nullable PolymerBlock requestPolymerBlock(ResourceLocation id, Block block) {
+        if (block.getClass().equals(RotatedPillarBlock.class)) return BaseFactoryBlock.BARRIER;
 
         return switch (block) {
             case PostBlock ignored -> ResourcePackGenerator.expandBlockModel(id, PostPolymerBlock.INSTANCE);
             case WeatheringCopperFullBlock ignored -> BaseFactoryBlock.BARRIER;
             case StainedGlassBlock ignored -> BaseFactoryBlock.BARRIER;
+            case ChocolateTabletBlock ignored -> ChocolateTabletPolymerBlock.INSTANCE;
             case ColoredTilesBlock ignored -> BaseFactoryBlock.BARRIER;
-            case ChainBlock ignored -> ChainPolymerBlock.INSTANCE;
-            case RotatedPillarBlock ignored -> BaseFactoryBlock.BARRIER;
             case SmallHedgeBlock ignored -> WallPolymerBlock.HEDGE;
             case Barrier ignored -> WallPolymerBlock.BARRIER;
             case OrientableBlockBase ignored -> BaseFactoryBlock.BARRIER;

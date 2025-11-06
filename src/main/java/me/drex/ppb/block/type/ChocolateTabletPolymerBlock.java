@@ -1,6 +1,6 @@
 package me.drex.ppb.block.type;
 
-import com.terraformersmc.cinderscapes.block.PolypiteQuartzBlock;
+import com.brand.blockus.blocks.base.ChocolateTabletBlock;
 import eu.pb4.factorytools.api.block.FactoryBlock;
 import eu.pb4.factorytools.api.block.model.generic.BSMMParticleBlock;
 import eu.pb4.polymer.blocks.api.BlockModelType;
@@ -22,14 +22,14 @@ import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.Map;
 
-public record PolypiteQuartzBlockPolymerBlock() implements FactoryBlock, PolymerTexturedBlock, BSMMParticleBlock {
-    public static final PolypiteQuartzBlockPolymerBlock INSTANCE = new PolypiteQuartzBlockPolymerBlock();
+public record ChocolateTabletPolymerBlock() implements FactoryBlock, PolymerTexturedBlock, BSMMParticleBlock {
+    public static final ChocolateTabletPolymerBlock INSTANCE = new ChocolateTabletPolymerBlock();
     private static final Map<Direction, BlockState> STATES_REGULAR = Util.makeEnumMap(Direction.class, x -> PolymerBlockResourceUtils.requestEmpty(BlockModelType.getTrapdoor(x, false)));
 
     @Override
     public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
-        Direction direction = blockState.getValue(PolypiteQuartzBlock.DIRECTION);
-        return STATES_REGULAR.get(direction.getOpposite());
+        Direction direction = blockState.getValue(ChocolateTabletBlock.FACING);
+        return STATES_REGULAR.get(direction);
     }
 
     @Override

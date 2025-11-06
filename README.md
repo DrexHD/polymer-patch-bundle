@@ -1,5 +1,5 @@
 # Polymer Patch Bundle
-This is a patch for [blockus](https://modrinth.com/mod/blockus), [terrestria](https://modrinth.com/mod/terrestria), [cinderscapes](https://modrinth.com/mod/cinderscapes), [traverse](https://modrinth.com/mod/traverse) and [woods_and_mires](https://github.com/KiloCraft/WoodsAndMires), making it work fully server side, with all of its functionality intact.
+This is a patch for [blockus](https://modrinth.com/mod/blockus), [cinderscapes](https://modrinth.com/mod/cinderscapes), [terrestria](https://modrinth.com/mod/terrestria), [traverse](https://modrinth.com/mod/traverse) and [woods_and_mires](https://github.com/KiloCraft/WoodsAndMires), making them work fully server side, with all of their functionality intact.
 
 The original mods are required *(the mod will only patch mods that are installed)* and not included within this mod.
 

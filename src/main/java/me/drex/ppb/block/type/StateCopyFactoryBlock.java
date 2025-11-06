@@ -36,6 +36,7 @@ public record StateCopyFactoryBlock(Block clientBlock,
     public static final StateCopyFactoryBlock PRESSURE_PLATE = new StateCopyFactoryBlock(Blocks.STONE_PRESSURE_PLATE, (state, blockPos) -> BlockStateModel.shortRange().shifty());
     public static final StateCopyFactoryBlock CARPET = new StateCopyFactoryBlock(Blocks.WHITE_CARPET, (state, blockPos) -> BlockStateModel.shortRange().shifty());
     public static final StateCopyFactoryBlock SHELF = new StateCopyFactoryBlock(Blocks.BIRCH_SHELF, (state, blockPos) -> BlockStateModel.shortRange().shifty());
+    public static final StateCopyFactoryBlock TRAPDOOR = new StateCopyFactoryBlock(Blocks.IRON_TRAPDOOR, (state, blockPos) -> BlockStateModel.midRange().shifty());
 
     @Override
     public BlockState getPolymerBlockState(BlockState state, PacketContext context) {
