@@ -62,7 +62,7 @@ publishMods {
 	type = STABLE
 	changelog = providers.environmentVariable("CHANGELOG").getOrElse("No changelog provided")
 
-	displayName = "terraform-patch ${version.get()}"
+	displayName = "Polymer Patch Bundle ${version.get()}"
 	modLoaders.addAll("fabric", "quilt")
 
 	modrinth {
@@ -70,7 +70,7 @@ publishMods {
 		projectId = "WhjutnwJ"
 		minecraftVersions.add(project.minecraft_version)
 		requires("polymer")
-		optional("blockus", "terrestria", "cinderscapes", "traverse")
+		optional("blockus", "cinderscapes", "terrestria", "traverse")
 	}
 
 	github {
