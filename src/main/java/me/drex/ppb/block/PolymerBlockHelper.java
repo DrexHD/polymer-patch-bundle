@@ -88,7 +88,7 @@ public class PolymerBlockHelper {
                     // TODO log debug
                     yield StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
                 } else {
-                    PolymerPatchBundleMod.LOGGER.warn("Missing overlay for block: '{}' {}", id, block.getClass().getName());
+                    PolymerPatchBundleMod.LOGGER.debug("Missing overlay for block: '{}' {}", id, block.getClass().getName());
                     yield null;
                 }
             }
