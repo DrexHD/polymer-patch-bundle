@@ -15,7 +15,7 @@ import me.drex.ppb.block.type.*;
 import me.drex.ppb.res.ResourceHelper;
 import me.drex.ppb.res.ResourcePackGenerator;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockState;
 
@@ -32,7 +32,7 @@ public class PolymerBlockHelper {
         "woods_and_mires", () -> WoodsAndMiresPolymerBlockHelper.INSTANCE
     );
 
-    public static void registerPolymerBlock(ResourceLocation id, Block block) {
+    public static void registerPolymerBlock(Identifier id, Block block) {
         BlockStateModelManager.addBlock(id, block);
         PolymerBlock polymerBlock = requestPolymerBlock(id, block);
         PolymerBlock.registerOverlay(block, polymerBlock);
@@ -48,7 +48,7 @@ public class PolymerBlockHelper {
         }
     }
 
-    public static PolymerBlock requestPolymerBlock(ResourceLocation id, Block block) {
+    public static PolymerBlock requestPolymerBlock(Identifier id, Block block) {
         Supplier<ModPolymerBlockHelper> modPolymerBlockHelper = MOD_HELPERS.get(id.getNamespace());
         if (modPolymerBlockHelper != null) {
             PolymerBlock polymerBlock = modPolymerBlockHelper.get().requestPolymerBlock(id, block);
@@ -103,7 +103,7 @@ public class PolymerBlockHelper {
         return polymerBlock;
     }
 
-    public static BlockState requestPolymerBlockState(ResourceLocation id, String variant, BlockModelType blockModelType) throws IOException {
+    public static BlockState requestPolymerBlockState(Identifier id, String variant, BlockModelType blockModelType) throws IOException {
         BlockStateAsset blockStateAsset = ResourceHelper.decodeBlockState(id);
 
         var model = blockStateAsset.variants().get().get(variant);

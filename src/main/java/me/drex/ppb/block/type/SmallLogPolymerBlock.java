@@ -14,7 +14,7 @@ import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import me.drex.ppb.PolymerPatchBundleMod;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -36,8 +36,8 @@ import java.util.*;
 public record SmallLogPolymerBlock(
     Map<Direction.Axis, BlockState> clientBlock) implements FactoryBlock, PolymerTexturedBlock, BSMMParticleBlock {
 
-    private static final Map<ResourceLocation, ModelAsset> MODELS = new HashMap<>();
-    private static final Set<ResourceLocation> USED_TEXTURES = new HashSet<>();
+    private static final Map<Identifier, ModelAsset> MODELS = new HashMap<>();
+    private static final Set<Identifier> USED_TEXTURES = new HashSet<>();
 
     static {
         PolymerResourcePackUtils.RESOURCE_PACK_AFTER_INITIAL_CREATION_EVENT.register(builder -> {
@@ -66,7 +66,7 @@ public record SmallLogPolymerBlock(
         });
     }
 
-    public static SmallLogPolymerBlock of(ResourceLocation id) {
+    public static SmallLogPolymerBlock of(Identifier id) {
         Map<Direction.Axis, BlockState> clientBlock = new HashMap<>();
         Map<String, String> textures = new HashMap<>();
         if (id.getPath().contains("oak_log")) {
@@ -80,11 +80,11 @@ public record SmallLogPolymerBlock(
             textures.put("side", id.withPrefix("block/").toString());
         }
 
-        textures.forEach((key, value) -> USED_TEXTURES.add(ResourceLocation.parse(value)));
+        textures.forEach((key, value) -> USED_TEXTURES.add(Identifier.parse(value)));
         {
 
-            ModelAsset modelAsset = new ModelAsset(Optional.of(ResourceLocation.withDefaultNamespace("block/cube_column")), Optional.empty(), textures);
-            ResourceLocation modelId = id.withPrefix("block/").withSuffix("_cube_column");
+            ModelAsset modelAsset = new ModelAsset(Optional.of(Identifier.withDefaultNamespace("block/cube_column")), Optional.empty(), textures);
+            Identifier modelId = id.withPrefix("block/").withSuffix("_cube_column");
             MODELS.put(modelId, modelAsset);
             BlockState state = PolymerBlockResourceUtils.requestBlock(BlockModelType.FULL_BLOCK, new PolymerBlockModel[]{new PolymerBlockModel(modelId, 0, 0, false, 1)});
             clientBlock.put(Direction.Axis.Y, state);
@@ -92,8 +92,8 @@ public record SmallLogPolymerBlock(
 
         {
             for (Direction.Axis axis : new Direction.Axis[]{Direction.Axis.X, Direction.Axis.Z}) {
-                ModelAsset modelAsset = new ModelAsset(Optional.of(ResourceLocation.withDefaultNamespace("block/cube_column_horizontal")), Optional.empty(), textures);
-                ResourceLocation modelId = id.withPrefix("block/").withSuffix("_cube_column_horizontal");
+                ModelAsset modelAsset = new ModelAsset(Optional.of(Identifier.withDefaultNamespace("block/cube_column_horizontal")), Optional.empty(), textures);
+                Identifier modelId = id.withPrefix("block/").withSuffix("_cube_column_horizontal");
                 MODELS.put(modelId, modelAsset);
                 BlockState state = PolymerBlockResourceUtils.requestBlock(BlockModelType.FULL_BLOCK, new PolymerBlockModel[]{new PolymerBlockModel(modelId, 90, axis == Direction.Axis.X ? 90 : 0, false, 1)});
                 clientBlock.put(axis, state);

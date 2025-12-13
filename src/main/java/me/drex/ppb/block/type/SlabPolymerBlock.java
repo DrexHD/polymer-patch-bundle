@@ -9,7 +9,7 @@ import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import me.drex.ppb.PolymerPatchBundleMod;
 import me.drex.ppb.block.BlockStateModel;
 import me.drex.ppb.block.PolymerBlockHelper;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import org.jetbrains.annotations.Nullable;
 import xyz.nucleoid.packettweaker.PacketContext;
@@ -42,7 +42,7 @@ public record SlabPolymerBlock(BlockState bottomState,
         }
     }
 
-    public static SlabPolymerBlock of(ResourceLocation id) {
+    public static SlabPolymerBlock of(Identifier id) {
         try {
             BlockState bottom = PolymerBlockHelper.requestPolymerBlockState(id, "type=bottom", BlockModelType.SCULK_SENSOR_BLOCK);
             BlockState bottomWaterlogged = PolymerBlockHelper.requestPolymerBlockState(id, "type=bottom", BlockModelType.SCULK_SENSOR_BLOCK_WATERLOGGED);

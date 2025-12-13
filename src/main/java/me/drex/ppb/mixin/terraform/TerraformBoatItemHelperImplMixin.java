@@ -5,9 +5,9 @@ import com.terraformersmc.terraform.boat.impl.item.TerraformBoatItemHelperImpl;
 import eu.pb4.polymer.core.api.entity.PolymerEntityUtils;
 import me.drex.ppb.entity.PolyBaseEntity;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.entity.EntityType;
-import net.minecraft.world.entity.vehicle.AbstractBoat;
+import net.minecraft.world.entity.vehicle.boat.AbstractBoat;
 import net.minecraft.world.item.BoatItem;
 import net.minecraft.world.item.Item;
 import org.spongepowered.asm.mixin.Mixin;
@@ -23,12 +23,12 @@ import java.util.function.Supplier;
 public abstract class TerraformBoatItemHelperImplMixin {
     @Inject(method = "registerBoat", at = @At("RETURN"))
     private static <T extends AbstractBoat> void polymerifyBoats(
-        ResourceLocation id, ResourceKey<Item> itemKey, ResourceKey<EntityType<?>> entityTypeKey,
+        Identifier id, ResourceKey<Item> itemKey, ResourceKey<EntityType<?>> entityTypeKey,
         Item.Properties settings, Function<Supplier<Item>, EntityType.EntityFactory<T>> factory,
-        BiConsumer<ResourceLocation, EntityType<T>> registry, CallbackInfoReturnable<BoatItem> cir,
+        BiConsumer<Identifier, EntityType<T>> registry, CallbackInfoReturnable<BoatItem> cir,
         @Local EntityType<?> entityType, @Local BoatItem item
     ) {
-        ResourceLocation location = entityTypeKey.location();
+        Identifier location = entityTypeKey.identifier();
         var vanillaType = location.getPath().contains("_chest")? EntityType.BIRCH_CHEST_BOAT : EntityType.BIRCH_BOAT;
         PolymerEntityUtils.registerOverlay(entityType, object -> new PolyBaseEntity(vanillaType));
     }

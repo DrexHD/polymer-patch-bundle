@@ -4,7 +4,7 @@ import com.terraformersmc.cinderscapes.block.*;
 import eu.pb4.polymer.blocks.api.BlockModelType;
 import eu.pb4.polymer.core.api.block.PolymerBlock;
 import me.drex.ppb.block.type.*;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.LeavesBlock;
 import net.minecraft.world.level.block.VegetationBlock;
@@ -14,7 +14,7 @@ public class CinderscapesPolymerBlockHelper implements ModPolymerBlockHelper {
     public static final CinderscapesPolymerBlockHelper INSTANCE = new CinderscapesPolymerBlockHelper();
 
     @Override
-    public @Nullable PolymerBlock requestPolymerBlock(ResourceLocation id, Block block) {
+    public @Nullable PolymerBlock requestPolymerBlock(Identifier id, Block block) {
         PolymerBlock polymerBlock = TerraformPolymerBlockHelper.INSTANCE.requestPolymerBlock(id, block);
         if (polymerBlock != null) return polymerBlock;
 

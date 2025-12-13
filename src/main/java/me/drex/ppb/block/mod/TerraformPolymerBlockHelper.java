@@ -10,7 +10,7 @@ import eu.pb4.polymer.core.api.block.PolymerBlock;
 import me.drex.ppb.block.type.BaseFactoryBlock;
 import me.drex.ppb.block.type.SmallLogPolymerBlock;
 import me.drex.ppb.block.type.StatePolymerBlock;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import org.jetbrains.annotations.Nullable;
@@ -19,7 +19,7 @@ public class TerraformPolymerBlockHelper implements ModPolymerBlockHelper {
     public static final TerraformPolymerBlockHelper INSTANCE = new TerraformPolymerBlockHelper();
 
     @Override
-    public @Nullable PolymerBlock requestPolymerBlock(ResourceLocation id, Block block) {
+    public @Nullable PolymerBlock requestPolymerBlock(Identifier id, Block block) {
         return switch (block) {
             case SmallLogBlock ignored -> SmallLogPolymerBlock.of(id);
             case QuarterLogBlock ignored -> {

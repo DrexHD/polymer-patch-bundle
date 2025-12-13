@@ -5,7 +5,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.IdMapper;
 import net.minecraft.core.registries.BuiltInRegistries;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.chunk.LevelChunk;
@@ -33,7 +33,7 @@ public class ColorProviderRegistry {
         return -1;
     }
 
-    public static boolean hasColor(ResourceLocation id) {
+    public static boolean hasColor(Identifier id) {
         try {
             Block value = BuiltInRegistries.BLOCK.getValue(id);
             return blockColors.byId(BuiltInRegistries.BLOCK.getId(value)) != null;

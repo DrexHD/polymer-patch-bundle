@@ -15,8 +15,8 @@ import eu.pb4.polymer.resourcepack.extras.api.format.blockstate.StateMultiPartDe
 import eu.pb4.polymer.resourcepack.extras.api.format.model.ModelAsset;
 import eu.pb4.polymer.resourcepack.extras.api.format.model.ModelElement;
 import me.drex.ppb.PolymerPatchBundleMod;
-import net.minecraft.ResourceLocationException;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.IdentifierException;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.phys.Vec3;
 
 import java.nio.charset.StandardCharsets;
@@ -27,18 +27,18 @@ import static me.drex.ppb.PolymerPatchBundleMod.id;
 
 public class ResourcePackGenerator {
     private static final Vec3 EXPANSION = new Vec3(0.08, 0.08, 0.08);
-    public static final Set<ResourceLocation> SIGNS = new HashSet<>();
-    public static final Set<ResourceLocation> EXPANDABLE_MODELS = new HashSet<>();
+    public static final Set<Identifier> SIGNS = new HashSet<>();
+    public static final Set<Identifier> EXPANDABLE_MODELS = new HashSet<>();
 
     public static void setup() {
         PolymerResourcePackUtils.RESOURCE_PACK_AFTER_INITIAL_CREATION_EVENT.register(ResourcePackGenerator::build);
     }
 
-    public static PolymerBlock expandBlockModel(ResourceLocation id, PolymerBlock polymerBlock) {
+    public static PolymerBlock expandBlockModel(Identifier id, PolymerBlock polymerBlock) {
         return expandBlockModel(id, polymerBlock, x -> true);
     }
 
-    public static PolymerBlock expandBlockModel(ResourceLocation id, PolymerBlock polymerBlock, Predicate<String> variantPredicate) {
+    public static PolymerBlock expandBlockModel(Identifier id, PolymerBlock polymerBlock, Predicate<String> variantPredicate) {
         try {
             BlockStateAsset blockStateAsset = ResourceHelper.decodeBlockState(id);
 
@@ -57,7 +57,7 @@ public class ResourcePackGenerator {
         return polymerBlock;
     }
 
-    private static void expandModel(ResourceLocation id) {
+    private static void expandModel(Identifier id) {
         try {
             EXPANDABLE_MODELS.add(id.withSuffix(".json"));
             ModelAsset modelAsset = ResourceHelper.decodeModel(id);
@@ -73,7 +73,7 @@ public class ResourcePackGenerator {
             String[] parts = string.split("/", 4);
             if (parts.length < 4) return;
             try {
-                ResourceLocation id = ResourceLocation.fromNamespaceAndPath(parts[1], parts[3]);
+                Identifier id = Identifier.fromNamespaceAndPath(parts[1], parts[3]);
                 if (!parts[0].equals("assets") || !parts[2].equals("models")) return;
                 if (!EXPANDABLE_MODELS.contains(id)) return;
                 var asset = ModelAsset.fromJson(new String(packResource.readAllBytes(), StandardCharsets.UTF_8));
@@ -92,14 +92,14 @@ public class ResourcePackGenerator {
                             ).toList()), asset.textures(), asset.display(), asset.guiLight(), asset.ambientOcclusion()).toBytes());
                     }
                 }
-            } catch (ResourceLocationException ignored) {
+            } catch (IdentifierException ignored) {
             }
         });
 
         PolymerPatchBundleMod.MOD_ASSET_IDS.forEach(modid -> {
             for (var entry : BlockStateModelManager.UV_LOCKED_MODELS.getOrDefault(modid, Collections.emptyMap()).entrySet()) {
                 String path = entry.getKey();
-                ResourceLocation id = ResourceLocation.fromNamespaceAndPath(modid, path).withSuffix(".json");
+                Identifier id = Identifier.fromNamespaceAndPath(modid, path).withSuffix(".json");
 
                 var expand = EXPANDABLE_MODELS.contains(id) ? EXPANSION : Vec3.ZERO;
 
@@ -114,7 +114,7 @@ public class ResourcePackGenerator {
                         builder.addData(AssetPaths.model(PolymerPatchBundleMod.MOD_ID, parentId.getPath() + suffix) + ".json",
                             ModelModifiers.expandModelAndRotateUVLocked(parentAsset, expand, v.x(), v.y()));
                         builder.addData(AssetPaths.model(modelId) + ".json",
-                            new ModelAsset(Optional.of(ResourceLocation.fromNamespaceAndPath(PolymerPatchBundleMod.MOD_ID, parentId.getPath() + suffix)), asset.elements(),
+                            new ModelAsset(Optional.of(Identifier.fromNamespaceAndPath(PolymerPatchBundleMod.MOD_ID, parentId.getPath() + suffix)), asset.elements(),
                                 asset.textures(), asset.display(), asset.guiLight(), asset.ambientOcclusion()).toBytes());
                     }
                 }
@@ -126,13 +126,13 @@ public class ResourcePackGenerator {
                 String[] parts = string.split("/", 4);
                 if (parts.length < 4) return resource;
                 try {
-                    ResourceLocation id = ResourceLocation.fromNamespaceAndPath(parts[1], parts[3]);
+                    Identifier id = Identifier.fromNamespaceAndPath(parts[1], parts[3]);
                     if (!parts[0].equals("assets") || !parts[2].equals("models")) return resource;
                     if (!EXPANDABLE_MODELS.contains(id)) return resource;
 
                     var asset = ModelAsset.fromJson(new String(resource.readAllBytes(), StandardCharsets.UTF_8));
                     return PackResource.of(new ModelAsset(asset.parent().map(x -> id(x.getPath())), asset.elements(), asset.textures(), asset.display(), asset.guiLight(), asset.ambientOcclusion()).toBytes());
-                } catch (ResourceLocationException ignored) {
+                } catch (IdentifierException ignored) {
                 }
             }
             return resource;

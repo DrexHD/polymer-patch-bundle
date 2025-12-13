@@ -14,7 +14,7 @@ import net.minecraft.core.Registry;
 import net.minecraft.core.WritableRegistry;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.world.effect.MobEffect;
 import net.minecraft.world.item.CreativeModeTab;
@@ -36,7 +36,7 @@ public interface RegistryMixin {
         )
     )
     private static <V, T extends V> boolean dontRegisterCreateModeTabs(WritableRegistry<T> instance, ResourceKey<T> resourceKey, T t, RegistrationInfo registrationInfo) {
-        ResourceLocation id = resourceKey.location();
+        Identifier id = resourceKey.identifier();
         if (!PolymerPatchBundleMod.MOD_NAMESPACES.contains(id.getNamespace())) {
             return true;
         }
@@ -72,7 +72,7 @@ public interface RegistryMixin {
 
     @Unique
     private static <V, T extends V> void polymerifyEntry(Registry<T> instance, ResourceKey<T> resourceKey, T object) {
-        ResourceLocation id = resourceKey.location();
+        Identifier id = resourceKey.identifier();
         if (!PolymerPatchBundleMod.MOD_NAMESPACES.contains(id.getNamespace())) {
             return;
         }

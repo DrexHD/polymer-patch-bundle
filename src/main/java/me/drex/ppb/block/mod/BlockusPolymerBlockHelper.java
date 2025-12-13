@@ -8,7 +8,7 @@ import eu.pb4.polymer.core.api.block.PolymerBlock;
 import me.drex.ppb.block.type.*;
 import me.drex.ppb.block.type.WallPolymerBlock;
 import me.drex.ppb.res.ResourcePackGenerator;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.*;
 import org.jetbrains.annotations.Nullable;
 
@@ -16,7 +16,7 @@ public class BlockusPolymerBlockHelper implements ModPolymerBlockHelper {
     public static final BlockusPolymerBlockHelper INSTANCE = new BlockusPolymerBlockHelper();
 
     @Override
-    public @Nullable PolymerBlock requestPolymerBlock(ResourceLocation id, Block block) {
+    public @Nullable PolymerBlock requestPolymerBlock(Identifier id, Block block) {
         if (block.getClass().equals(RotatedPillarBlock.class)) return BaseFactoryBlock.BARRIER;
 
         return switch (block) {

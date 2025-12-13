@@ -8,7 +8,7 @@ import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import me.drex.ppb.PolymerPatchBundleMod;
 import me.drex.ppb.block.PolymerBlockHelper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -23,7 +23,7 @@ import xyz.nucleoid.packettweaker.PacketContext;
 // layer 1 and 8 are very common in world generation and shouldn't use display entities
 public record LayerPolymerBlock(BlockState layer1, BlockState layer8) implements FactoryBlock, PolymerTexturedBlock, BSMMParticleBlock {
 
-    public static LayerPolymerBlock of(ResourceLocation id, Block block) {
+    public static LayerPolymerBlock of(Identifier id, Block block) {
         try {
             BlockState layer1 = PolymerBlockHelper.requestPolymerBlockState(id, "layers=1", BlockModelType.TRIPWIRE_BLOCK_FLAT);
             BlockState layer8 = PolymerBlockHelper.requestPolymerBlockState(id, "layers=8", BlockModelType.FULL_BLOCK);

@@ -8,7 +8,7 @@ import me.drex.ppb.block.type.BaseFactoryBlock;
 import me.drex.ppb.block.type.BranchPolymerBlock;
 import me.drex.ppb.block.type.StatePolymerBlock;
 import me.drex.ppb.res.ResourcePackGenerator;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RotatedPillarBlock;
 import org.jetbrains.annotations.Nullable;
@@ -17,7 +17,7 @@ public class WoodsAndMiresPolymerBlockHelper implements ModPolymerBlockHelper {
     public static final WoodsAndMiresPolymerBlockHelper INSTANCE = new WoodsAndMiresPolymerBlockHelper();
 
     @Override
-    public @Nullable PolymerBlock requestPolymerBlock(ResourceLocation id, Block block) {
+    public @Nullable PolymerBlock requestPolymerBlock(Identifier id, Block block) {
         return switch (id.getPath()) {
             case "fireweed", "tansy" -> StatePolymerBlock.of(id, block, BlockModelType.BIOME_PLANT_BLOCK, BaseFactoryBlock.PLANT);
             default -> switch (block) {

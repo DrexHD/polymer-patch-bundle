@@ -22,7 +22,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -85,18 +85,18 @@ public class PolymerPatchBundleMod implements ModInitializer {
 
     public static void setupModAssets(String modid) {
         ResourcePackExtras.forDefault().addBridgedModelsFolder(
-            ResourceLocation.fromNamespaceAndPath(modid, "block_sign")
+            Identifier.fromNamespaceAndPath(modid, "block_sign")
         );
         ResourcePackExtras.forDefault().addBridgedModelsFolder(
-            ResourceLocation.fromNamespaceAndPath(modid, "block"),
+            Identifier.fromNamespaceAndPath(modid, "block"),
             (id, resourcePackBuilder) -> {
                 return new ItemAsset(new BasicItemModel(id, List.of(new MapColorTintSource(0xFFFFFF))), ItemAsset.Properties.DEFAULT);
             }
         );
     }
 
-    public static ResourceLocation id(String path) {
-        return ResourceLocation.fromNamespaceAndPath(MOD_ID, path);
+    public static Identifier id(String path) {
+        return Identifier.fromNamespaceAndPath(MOD_ID, path);
     }
 
 }

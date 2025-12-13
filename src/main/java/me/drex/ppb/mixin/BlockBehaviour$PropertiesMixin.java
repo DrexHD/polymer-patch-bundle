@@ -2,7 +2,7 @@ package me.drex.ppb.mixin;
 
 import me.drex.ppb.PolymerPatchBundleMod;
 import net.minecraft.resources.ResourceKey;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockBehaviour;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,7 +21,7 @@ public abstract class BlockBehaviour$PropertiesMixin {
         at = @At("RETURN")
     )
     public void disableOcclusion(ResourceKey<Block> resourceKey, CallbackInfoReturnable<BlockBehaviour.Properties> cir) {
-        ResourceLocation id = resourceKey.location();
+        Identifier id = resourceKey.identifier();
         if (!PolymerPatchBundleMod.MOD_NAMESPACES.contains(id.getNamespace())) {
             return;
         }

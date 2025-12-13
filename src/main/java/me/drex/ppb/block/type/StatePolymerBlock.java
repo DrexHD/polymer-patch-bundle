@@ -13,7 +13,7 @@ import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import me.drex.ppb.PolymerPatchBundleMod;
 import me.drex.ppb.res.ResourceHelper;
 import net.minecraft.core.BlockPos;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.util.Tuple;
@@ -32,15 +32,15 @@ import java.util.function.Predicate;
 public record StatePolymerBlock(Map<BlockState, BlockState> map,
                                 FactoryBlock fallback) implements FactoryBlock, PolymerTexturedBlock, BSMMParticleBlock {
 
-    public static StatePolymerBlock of(ResourceLocation id, Block block, BlockModelType type) {
+    public static StatePolymerBlock of(Identifier id, Block block, BlockModelType type) {
         return of(id, block, type, BaseFactoryBlock.BARRIER);
     }
 
-    public static StatePolymerBlock of(ResourceLocation id, Block block, BlockModelType type, FactoryBlock fallback) {
+    public static StatePolymerBlock of(Identifier id, Block block, BlockModelType type, FactoryBlock fallback) {
         return of(id, block, type, fallback, x -> true);
     }
 
-    public static StatePolymerBlock of(ResourceLocation id, Block block, BlockModelType type, FactoryBlock fallback, Predicate<BlockState> canUseBlock) {
+    public static StatePolymerBlock of(Identifier id, Block block, BlockModelType type, FactoryBlock fallback, Predicate<BlockState> canUseBlock) {
         try {
             BlockStateAsset blockStateAsset = ResourceHelper.decodeBlockState(id);
 
