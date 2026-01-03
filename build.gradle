@@ -13,13 +13,12 @@ base {
 
 repositories {
 	maven { url "https://api.modrinth.com/maven/" }
-	maven { url 'https://maven.nucleoid.xyz' }
+	maven { url 'https://maven.nucleoid.xyz/releases' }
 	maven { url 'https://maven.terraformersmc.com/' }
 	maven {
 		url "https://maven.theepicblock.nl"
 		content { includeGroup("nl.theepicblock") }
 	}
-//    mavenLocal()
 }
 
 dependencies {

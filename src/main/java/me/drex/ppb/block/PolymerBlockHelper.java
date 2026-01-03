@@ -33,7 +33,14 @@ public class PolymerBlockHelper {
     );
 
     public static void registerPolymerBlock(Identifier id, Block block) {
-        BlockStateModelManager.addBlock(id, block);
+        boolean transparent = block instanceof TransparentBlock || block instanceof StainedGlassPaneBlock;
+
+        if (transparent) {
+            BlockStateModelManager.addTransparentBlock(id, block);
+        } else {
+            BlockStateModelManager.addSolidBlock(id, block);
+        }
+
         PolymerBlock polymerBlock = requestPolymerBlock(id, block);
         PolymerBlock.registerOverlay(block, polymerBlock);
         if (polymerBlock instanceof BlockWithElementHolder blockWithElementHolder) {
