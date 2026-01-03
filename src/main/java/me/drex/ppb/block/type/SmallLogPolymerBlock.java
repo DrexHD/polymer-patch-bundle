@@ -8,6 +8,7 @@ import eu.pb4.polymer.blocks.api.PolymerBlockModel;
 import eu.pb4.polymer.blocks.api.PolymerBlockResourceUtils;
 import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.resourcepack.api.AssetPaths;
+import eu.pb4.polymer.resourcepack.api.PackResource;
 import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.polymer.resourcepack.extras.api.format.model.ModelAsset;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
@@ -17,6 +18,7 @@ import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.ARGB;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Blocks;
@@ -29,7 +31,6 @@ import xyz.nucleoid.packettweaker.PacketContext;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.*;
 
@@ -54,16 +55,109 @@ public record SmallLogPolymerBlock(
                 }
                 try {
                     BufferedImage img = ImageIO.read(new ByteArrayInputStream(bytes));
-                    BufferedImage trimmed = img.getSubimage(3, 3, 10, 10);
-                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    ImageIO.write(trimmed, "png", baos);
-                    builder.addData(path, baos.toByteArray());
+                    if (id.getPath().contains("_top")) {
+                        patchTopTexture(img);
+                    } else {
+                        patchSideTexture(img);
+                    }
+                    builder.addData(path, PackResource.fromImage(img));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
 
             });
         });
+    }
+
+    private static void patchTopTexture(BufferedImage img) {
+        // Collect the colors (in appearing order) of all relevant rings
+        List<Integer> innerRingColors = new LinkedList<>();
+        List<Integer> outerRingColors = new LinkedList<>();
+        List<Integer> barkRingColors = new LinkedList<>();
+
+        int startX = 7;
+        int startY = 7;
+
+        int[] dx = new int[]{1, 0, -1, 0};
+        int[] dy = new int[]{0, 1, 0, -1};
+
+        for (int ring = 0; ring < 5; ring++) {
+            int steps = (ring * 2) + 1;
+            int x = startX;
+            int y = startY;
+
+            for (int dir = 0; dir < 4; dir++) {
+                for (int i = 0; i < steps; i++) {
+                    int color = img.getRGB(x, y);
+                    if (ring == 4) {
+                        barkRingColors.add(color);
+                    } else if (ring % 2 == 0) {
+                        innerRingColors.add(color);
+                    } else {
+                        outerRingColors.add(color);
+                    }
+                    x += dx[dir];
+                    y += dy[dir];
+                }
+            }
+            startX--;
+            startY--;
+        }
+
+        // Expand the ring patterns with the collected color patterns
+        startX = 7;
+        startY = 7;
+        for (int ring = 0; ring < 8; ring++) {
+            int steps = (ring * 2) + 1;
+            int x = startX;
+            int y = startY;
+
+            int index = 0;
+            for (int dir = 0; dir < 4; dir++) {
+                for (int i = 0; i < steps; i++) {
+                    List<Integer> colors;
+                    if (ring == 7) {
+                        colors = barkRingColors;
+                    } else if (ring == 0 || ring == 2 || ring == 5) {
+                        colors = innerRingColors;
+                    } else {
+                        colors = outerRingColors;
+                    }
+                    img.setRGB(x, y, colors.get(index % colors.size()));
+
+                    x += dx[dir];
+                    y += dy[dir];
+                    index++;
+                }
+            }
+            startX--;
+            startY--;
+        }
+    }
+
+
+    private static void patchSideTexture(BufferedImage img) {
+        var xo = 0;
+        var yo = 0;
+        var width = img.getWidth();
+        var height = img.getHeight();
+
+        loop:
+        for (; xo < width / 2; xo++) {
+            for (; yo < height / 2; yo++) {
+                if (ARGB.alpha(img.getRGB(xo, yo)) != 0) {
+                    break loop;
+                }
+            }
+        }
+
+        for (int x = 0; x < width; x++) {
+            for (int y = 0; y < height; y++) {
+                if (ARGB.alpha(img.getRGB(x, y)) == 0) {
+                    img.setRGB(x, y, img.getRGB((x + xo) % width, (y + yo) % height));
+                }
+            }
+        }
     }
 
     public static SmallLogPolymerBlock of(Identifier id) {
