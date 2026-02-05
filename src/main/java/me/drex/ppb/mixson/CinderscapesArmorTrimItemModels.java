@@ -1,0 +1,113 @@
+package me.drex.ppb.mixson;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.terraformersmc.cinderscapes.Cinderscapes;
+import com.terraformersmc.cinderscapes.init.CinderscapesArmorTrimMaterials;
+import net.minecraft.resources.Identifier;
+import net.ramixin.mixson.inline.EventContext;
+import net.ramixin.mixson.inline.Mixson;
+import net.ramixin.mixson.inline.MixsonEvent;
+
+import java.util.List;
+
+// Copied from com.terraformersmc.cinderscapes.init.CinderscapesArmorTrimItemModels
+public final class CinderscapesArmorTrimItemModels {
+    private static final List<String> ARMORS = List.of("helmet", "chestplate", "leggings", "boots");
+    private static final List<String> ARMOR_MATERIALS = List.of("leather", "copper", "chainmail", "iron", "golden", "diamond", "netherite");
+
+    private CinderscapesArmorTrimItemModels() {
+    }
+
+    public static void init() {
+        ARMORS.forEach(armor -> ARMOR_MATERIALS.forEach(armorMaterial -> registerAddTrimsToArmor(armor, armorMaterial)));
+
+        registerAddTrimsToArmor("helmet", "turtle");
+
+        registerAddTrimsToAtlas("armor_trims");
+        registerAddTrimsToAtlas("items");
+    }
+
+    private static void registerAddTrimsToArmor(String armor, String armorMaterial) {
+        Mixson.registerEvent(
+            Mixson.DEFAULT_PRIORITY,
+            id -> Identifier.withDefaultNamespace("items/" + armorMaterial + "_" + armor).equals(id),
+            Cinderscapes.MOD_ID + ":add_trims_to_" + armorMaterial + "_" + armor,
+            new MixsonEvent<>() {
+                @Override
+                public void runEvent(EventContext<JsonElement> context) {
+                    JsonElement elem = context.getFile();
+                    JsonObject root = elem.getAsJsonObject();
+                    JsonObject model = root.getAsJsonObject("model");
+                    JsonArray cases = model.getAsJsonArray("cases");
+                    JsonObject case0 = cases.get(0).getAsJsonObject();
+
+                    CinderscapesArmorTrimMaterials.TRIM_MATERIALS.forEach(trim -> {
+                        JsonObject newCase = case0.deepCopy();
+
+                        newCase.addProperty("when", trimMaterialId(trim).toString());
+                        newCase.getAsJsonObject("model")
+                            .addProperty("model", itemModelId(armor, armorMaterial, trim).toString());
+
+                        cases.add(newCase);
+                    });
+                }
+
+                @Override
+                public int ordinal() {
+                    return 0;
+                }
+            },
+            false
+        );
+    }
+
+    private static void registerAddTrimsToAtlas(String name) {
+        Mixson.registerEvent(
+            Mixson.DEFAULT_PRIORITY,
+            id -> Identifier.withDefaultNamespace("atlases/" + name).equals(id),
+            Cinderscapes.MOD_ID + ":add_trims_to_" + name + "_atlas",
+            new MixsonEvent<>() {
+                @Override
+                public void runEvent(EventContext<JsonElement> context) {
+                    JsonElement elem = context.getFile();
+                    JsonObject root = elem.getAsJsonObject();
+                    JsonArray sources = root.getAsJsonArray("sources");
+
+                    for (int i = 0; i < sources.size(); ++i) {
+                        JsonObject source = sources.get(i).getAsJsonObject();
+
+                        if ("minecraft:paletted_permutations".equals(source.getAsJsonPrimitive("type").getAsString())) {
+                            JsonObject permutations = source.getAsJsonObject("permutations");
+
+                            CinderscapesArmorTrimMaterials.TRIM_MATERIALS.forEach(trim ->
+                                permutations.addProperty(trim, paletteId(trim).toString())
+                            );
+
+                            break;
+                        }
+                    }
+                }
+
+                @Override
+                public int ordinal() {
+                    return 0;
+                }
+            },
+            false
+        );
+    }
+
+    private static Identifier trimMaterialId(String trim) {
+        return Identifier.fromNamespaceAndPath(Cinderscapes.MOD_ID, trim);
+    }
+
+    private static Identifier itemModelId(String armor, String armorMaterial, String trim) {
+        return Identifier.fromNamespaceAndPath(Cinderscapes.MOD_ID, "item/" + armorMaterial + "_" + armor + "_" + trim + "_trim");
+    }
+
+    private static Identifier paletteId(String trim) {
+        return Identifier.fromNamespaceAndPath(Cinderscapes.MOD_ID, "trims/color_palettes/" + trim);
+    }
+}

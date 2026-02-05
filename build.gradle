@@ -19,6 +19,7 @@ repositories {
 		url "https://maven.theepicblock.nl"
 		content { includeGroup("nl.theepicblock") }
 	}
+    maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -47,6 +48,7 @@ dependencies {
 
 	modImplementation include("eu.pb4:factorytools:${project.factorytools_version}")
 	modImplementation include("nl.theepicblock:resource-locator-api:${project.resource_locator_version}")
+    modImplementation 'com.github.ramixin:mixson-fabric:1.4.0'
 
 	modImplementation "eu.pb4:polymer-core:${project.polymer_version}"
 	modImplementation("eu.pb4:polymer-blocks:${project.polymer_version}")

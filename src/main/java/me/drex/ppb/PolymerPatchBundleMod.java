@@ -14,6 +14,8 @@ import it.unimi.dsi.fastutil.objects.Reference2IntMap;
 import it.unimi.dsi.fastutil.objects.Reference2IntOpenHashMap;
 import me.drex.ppb.color.ColorProviderRegistry;
 import me.drex.ppb.color.ColorMapHelper;
+import me.drex.ppb.mixson.CinderscapesArmorTrimItemModels;
+import me.drex.ppb.mixson.MixsonPatcher;
 import me.drex.ppb.res.ResourceHelper;
 import me.drex.ppb.res.ResourcePackGenerator;
 import net.fabricmc.api.ModInitializer;
@@ -46,6 +48,10 @@ public class PolymerPatchBundleMod implements ModInitializer {
     public void onInitialize() {
         PolymerResourcePackUtils.RESOURCE_PACK_CREATION_EVENT.register(ResourceHelper::init);
         ResourcePackGenerator.setup();
+        MixsonPatcher.setup();
+        if (FabricLoader.getInstance().isModLoaded("cinderscapes")) {
+            CinderscapesArmorTrimItemModels.init();
+        }
         ColorMapHelper.init();
         ColorProviderRegistry.init();
 
