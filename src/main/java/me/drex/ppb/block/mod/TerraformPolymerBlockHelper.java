@@ -29,8 +29,8 @@ public class TerraformPolymerBlockHelper implements ModPolymerBlockHelper {
                 yield BaseFactoryBlock.BARRIER;
             }
             case RotatedPillarBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
-            case TerraformDirtPathBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FARMLAND_BLOCK);
-            case LeafPileBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.TRIPWIRE_BLOCK_FLAT);
+            case TerraformDirtPathBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FARMLAND);
+            case LeafPileBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.TRIPWIRE_FLAT);
             default -> null;
         };
     }

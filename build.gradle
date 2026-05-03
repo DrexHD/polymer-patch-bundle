@@ -1,5 +1,5 @@
 plugins {
-	id 'fabric-loom' version '1.14-SNAPSHOT'
+	id 'net.fabricmc.fabric-loom' version '1.16-SNAPSHOT'
 	id "me.modmuss50.mod-publish-plugin" version "1.1.0"
 	id 'maven-publish'
 }
@@ -20,47 +20,48 @@ repositories {
 		content { includeGroup("nl.theepicblock") }
 	}
     maven { url 'https://jitpack.io' }
+	mavenLocal()
 }
 
 dependencies {
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
-	mappings loom.officialMojangMappings()
-	modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+	implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-	modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+	implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
 
-	modCompileOnly("com.terraformersmc.terraform-api:terraform-biome-remapper-api-v1:${project.terraform_api_version}")
-	modCompileOnly("com.terraformersmc.terraform-api:terraform-config-api-v1:${project.terraform_api_version}")
-	modCompileOnly("com.terraformersmc.terraform-api:terraform-dirt-api-v1:${project.terraform_api_version}")
-	modCompileOnly("com.terraformersmc.terraform-api:terraform-shapes-api-v1:${project.terraform_api_version}")
-	modCompileOnly("com.terraformersmc.terraform-api:terraform-surfaces-api-v1:${project.terraform_api_version}")
-	modCompileOnly("com.terraformersmc.terraform-api:terraform-tree-api-v1:${project.terraform_api_version}")
-	modCompileOnly("com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_api_version}")
-	modCompileOnly("com.terraformersmc:biolith-fabric:${project.biolith_version}")
+	compileOnly("com.terraformersmc.terraform-api:terraform-biome-remapper-api-v1:${project.terraform_api_version}")
+	compileOnly("com.terraformersmc.terraform-api:terraform-config-api-v1:${project.terraform_api_version}")
+	compileOnly("com.terraformersmc.terraform-api:terraform-dirt-api-v1:${project.terraform_api_version}")
+	compileOnly("com.terraformersmc.terraform-api:terraform-shapes-api-v1:${project.terraform_api_version}")
+	compileOnly("com.terraformersmc.terraform-api:terraform-surfaces-api-v1:${project.terraform_api_version}")
+	compileOnly("com.terraformersmc.terraform-api:terraform-tree-api-v1:${project.terraform_api_version}")
+	compileOnly("com.terraformersmc.terraform-api:terraform-wood-api-v1:${project.terraform_api_version}")
+	compileOnly("com.terraformersmc:biolith-fabric:${project.biolith_version}")
 
-	modCompileOnly("com.terraformersmc:terrestria-common:${project.terrestria_version}")
-	modCompileOnly("com.terraformersmc:cinderscapes-common:${project.cinderscapes_version}")
-	modCompileOnly("com.terraformersmc:traverse-common:${project.traverse_version}")
-	modCompileOnly files("libs/WoodsAndMires-2.1.1+1.21.9.jar")
-	modCompileOnly("maven.modrinth:blockus:${project.blockus_version}")
+	compileOnly("maven.modrinth:terrestria:${project.terrestria_version}")
+//	compileOnly("com.terraformersmc:cinderscapes-common:${project.cinderscapes_version}")
+	compileOnly("maven.modrinth:traverse:${project.traverse_version}")
+	compileOnly files("libs/cinderscapes-common-5.6.0+dev.157ef80-dev.jar")
+	compileOnly files("libs/WoodsAndMires-2.1.2+26.1.jar")
+	compileOnly("maven.modrinth:blockus:${project.blockus_version}")
 
 
-	modImplementation include("eu.pb4:factorytools:${project.factorytools_version}")
-	modImplementation include("nl.theepicblock:resource-locator-api:${project.resource_locator_version}")
-    modImplementation 'com.github.ramixin:mixson-fabric:1.4.0'
+	implementation include("eu.pb4:factorytools:${project.factorytools_version}")
+	implementation include("nl.theepicblock:resource-locator-api:${project.resource_locator_version}")
+    implementation 'com.github.ramixin:mixson-fabric:2.1.0'
 
-	modImplementation "eu.pb4:polymer-core:${project.polymer_version}"
-	modImplementation("eu.pb4:polymer-blocks:${project.polymer_version}")
-	modImplementation "eu.pb4:polymer-resource-pack:${project.polymer_version}"
-	modImplementation("eu.pb4:polymer-sound-patcher:${project.polymer_version}")
-	modImplementation "eu.pb4:polymer-resource-pack-extras:${project.polymer_version}"
-	modImplementation("eu.pb4:polymer-autohost:${project.polymer_version}")
-	modImplementation "eu.pb4:polymer-virtual-entity:${project.polymer_version}"
+	implementation "eu.pb4:polymer-core:${project.polymer_version}"
+	implementation("eu.pb4:polymer-blocks:${project.polymer_version}")
+	implementation "eu.pb4:polymer-resource-pack:${project.polymer_version}"
+	implementation("eu.pb4:polymer-sound-patcher:${project.polymer_version}")
+	implementation "eu.pb4:polymer-resource-pack-extras:${project.polymer_version}"
+	implementation("eu.pb4:polymer-autohost:${project.polymer_version}")
+	implementation "eu.pb4:polymer-virtual-entity:${project.polymer_version}"
 }
 
 publishMods {
-	file = remapJar.archiveFile
+	file = jar.archiveFile
 	type = STABLE
 	changelog = providers.environmentVariable("CHANGELOG").getOrElse("No changelog provided")
 
@@ -91,7 +92,7 @@ processResources {
 }
 
 tasks.withType(JavaCompile).configureEach {
-	it.options.release = 21
+	it.options.release = 25
 }
 
 java {
@@ -100,8 +101,8 @@ java {
 	// If you remove this line, sources will not be generated.
 	withSourcesJar()
 
-	sourceCompatibility = JavaVersion.VERSION_21
-	targetCompatibility = JavaVersion.VERSION_21
+	sourceCompatibility = JavaVersion.VERSION_25
+	targetCompatibility = JavaVersion.VERSION_25
 }
 
 jar {

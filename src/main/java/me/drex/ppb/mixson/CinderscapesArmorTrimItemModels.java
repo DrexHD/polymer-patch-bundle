@@ -6,9 +6,10 @@ import com.google.gson.JsonObject;
 import com.terraformersmc.cinderscapes.Cinderscapes;
 import com.terraformersmc.cinderscapes.init.CinderscapesArmorTrimMaterials;
 import net.minecraft.resources.Identifier;
-import net.ramixin.mixson.inline.EventContext;
-import net.ramixin.mixson.inline.Mixson;
-import net.ramixin.mixson.inline.MixsonEvent;
+import net.ramixin.mixson.Mixson;
+import net.ramixin.mixson.MixsonCodecs;
+import net.ramixin.mixson.enums.ErrorPolicy;
+import net.ramixin.mixson.enums.Lifetime;
 
 import java.util.List;
 
@@ -31,71 +32,59 @@ public final class CinderscapesArmorTrimItemModels {
 
     private static void registerAddTrimsToArmor(String armor, String armorMaterial) {
         Mixson.registerEvent(
+            MixsonCodecs.JSON_ELEMENT,
             Mixson.DEFAULT_PRIORITY,
-            id -> Identifier.withDefaultNamespace("items/" + armorMaterial + "_" + armor).equals(id),
+            Lifetime.PERSISTENT,
+            ErrorPolicy.LOG,
             Cinderscapes.MOD_ID + ":add_trims_to_" + armorMaterial + "_" + armor,
-            new MixsonEvent<>() {
-                @Override
-                public void runEvent(EventContext<JsonElement> context) {
-                    JsonElement elem = context.getFile();
-                    JsonObject root = elem.getAsJsonObject();
-                    JsonObject model = root.getAsJsonObject("model");
-                    JsonArray cases = model.getAsJsonArray("cases");
-                    JsonObject case0 = cases.get(0).getAsJsonObject();
+            index -> Identifier.withDefaultNamespace("items/" + armorMaterial + "_" + armor).equals(index.id()),
+            context -> {
+                JsonElement elem = context.getFile();
+                JsonObject root = elem.getAsJsonObject();
+                JsonObject model = root.getAsJsonObject("model");
+                JsonArray cases = model.getAsJsonArray("cases");
+                JsonObject case0 = cases.get(0).getAsJsonObject();
 
-                    CinderscapesArmorTrimMaterials.TRIM_MATERIALS.forEach(trim -> {
-                        JsonObject newCase = case0.deepCopy();
+                CinderscapesArmorTrimMaterials.TRIM_MATERIALS.forEach(trim -> {
+                    JsonObject newCase = case0.deepCopy();
 
-                        newCase.addProperty("when", trimMaterialId(trim).toString());
-                        newCase.getAsJsonObject("model")
-                            .addProperty("model", itemModelId(armor, armorMaterial, trim).toString());
+                    newCase.addProperty("when", trimMaterialId(trim).toString());
+                    newCase.getAsJsonObject("model")
+                        .addProperty("model", itemModelId(armor, armorMaterial, trim).toString());
 
-                        cases.add(newCase);
-                    });
-                }
-
-                @Override
-                public int ordinal() {
-                    return 0;
-                }
-            },
-            false
+                    cases.add(newCase);
+                });
+            }
         );
     }
 
     private static void registerAddTrimsToAtlas(String name) {
         Mixson.registerEvent(
+            MixsonCodecs.JSON_ELEMENT,
             Mixson.DEFAULT_PRIORITY,
-            id -> Identifier.withDefaultNamespace("atlases/" + name).equals(id),
-            Cinderscapes.MOD_ID + ":add_trims_to_" + name + "_atlas",
-            new MixsonEvent<>() {
-                @Override
-                public void runEvent(EventContext<JsonElement> context) {
-                    JsonElement elem = context.getFile();
-                    JsonObject root = elem.getAsJsonObject();
-                    JsonArray sources = root.getAsJsonArray("sources");
+            Lifetime.PERSISTENT,
+            ErrorPolicy.LOG,
+        Cinderscapes.MOD_ID + ":add_trims_to_" + name + "_atlas",
+            index -> Identifier.withDefaultNamespace("atlases/" + name).equals(index.id()),
+            context -> {
+                JsonElement elem = context.getFile();
+                JsonObject root = elem.getAsJsonObject();
+                JsonArray sources = root.getAsJsonArray("sources");
 
-                    for (int i = 0; i < sources.size(); ++i) {
-                        JsonObject source = sources.get(i).getAsJsonObject();
+                for (int i = 0; i < sources.size(); ++i) {
+                    JsonObject source = sources.get(i).getAsJsonObject();
 
-                        if ("minecraft:paletted_permutations".equals(source.getAsJsonPrimitive("type").getAsString())) {
-                            JsonObject permutations = source.getAsJsonObject("permutations");
+                    if ("minecraft:paletted_permutations".equals(source.getAsJsonPrimitive("type").getAsString())) {
+                        JsonObject permutations = source.getAsJsonObject("permutations");
 
-                            CinderscapesArmorTrimMaterials.TRIM_MATERIALS.forEach(trim ->
-                                permutations.addProperty(trim, paletteId(trim).toString())
-                            );
+                        CinderscapesArmorTrimMaterials.TRIM_MATERIALS.forEach(trim ->
+                            permutations.addProperty(trim, paletteId(trim).toString())
+                        );
 
-                            break;
-                        }
+                        break;
                     }
                 }
-
-                @Override
-                public int ordinal() {
-                    return 0;
-                }
-            },
-            false
+            }
         );
     }
 

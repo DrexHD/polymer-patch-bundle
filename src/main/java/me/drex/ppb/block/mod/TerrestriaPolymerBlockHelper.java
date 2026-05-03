@@ -23,9 +23,9 @@ public class TerrestriaPolymerBlockHelper implements ModPolymerBlockHelper {
 
         return switch (block) {
             case SaguaroCactusBlock ignored -> BaseFactoryBlock.CACTUS;
-            case BasaltGrassBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.BIOME_TRANSPARENT_BLOCK, StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK), state -> !state.getValue(BlockStateProperties.SNOWY));
-            case CattailBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.KELP_BLOCK);
-            case TallCattailBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.KELP_BLOCK);
+            case BasaltGrassBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.BIOME_COLORED_LEAVES, StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK), state -> !state.getValue(BlockStateProperties.SNOWY));
+            case CattailBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.KELP);
+            case TallCattailBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.KELP);
             default -> null;
         };
     }

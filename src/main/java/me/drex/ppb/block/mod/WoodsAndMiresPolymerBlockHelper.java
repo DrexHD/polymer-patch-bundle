@@ -19,7 +19,7 @@ public class WoodsAndMiresPolymerBlockHelper implements ModPolymerBlockHelper {
     @Override
     public @Nullable PolymerBlock requestPolymerBlock(Identifier id, Block block) {
         return switch (id.getPath()) {
-            case "fireweed", "tansy" -> StatePolymerBlock.of(id, block, BlockModelType.BIOME_PLANT_BLOCK, BaseFactoryBlock.PLANT);
+            case "fireweed", "tansy" -> StatePolymerBlock.of(id, block, BlockModelType.BIOME_PLANT, BaseFactoryBlock.PLANT);
             default -> switch (block) {
                 case ShrubLogBlock ignored -> BaseFactoryBlock.BARRIER;
                 case RotatedPillarBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);

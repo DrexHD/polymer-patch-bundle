@@ -7,6 +7,7 @@ import eu.pb4.polymer.blocks.api.PolymerBlockResourceUtils;
 import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import me.drex.ppb.block.BlockStateModel;
+import net.fabricmc.fabric.api.networking.v1.context.PacketContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerLevel;
@@ -17,7 +18,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
-import xyz.nucleoid.packettweaker.PacketContext;
 
 public record PostPolymerBlock() implements FactoryBlock, PolymerTexturedBlock, BSMMParticleBlock {
     private static final BlockState[] EMPTY_STATES = new BlockState[6];

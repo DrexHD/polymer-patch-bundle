@@ -27,6 +27,7 @@ public class PPBMixinPlugin implements IMixinConfigPlugin {
         String subPackage = name.split("\\.", 1)[0];
         return switch (subPackage) {
             case "terraform" -> FabricLoader.getInstance().isModLoaded("terraform-wood-api");
+            case "blockus" -> FabricLoader.getInstance().isModLoaded("blockus");
             default -> true;
         };
     }

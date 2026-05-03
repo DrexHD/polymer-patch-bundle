@@ -1,10 +1,12 @@
 package me.drex.ppb.mixin;
 
 import com.llamalad7.mixinextras.injector.v2.WrapWithCondition;
+import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
+import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
+import eu.pb4.polymer.core.api.item.PolymerCreativeModeTabUtils;
 import eu.pb4.polymer.core.api.item.PolymerItem;
-import eu.pb4.polymer.core.api.item.PolymerItemGroupUtils;
+import eu.pb4.polymer.core.api.other.PolymerMobEffect;
 import eu.pb4.polymer.core.api.other.PolymerSoundEvent;
-import eu.pb4.polymer.core.api.other.PolymerStatusEffect;
 import me.drex.ppb.PolymerPatchBundleMod;
 import me.drex.ppb.block.PolymerBlockHelper;
 import me.drex.ppb.item.PolyBaseItem;
@@ -28,24 +30,24 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(Registry.class)
 public interface RegistryMixin {
-    @WrapWithCondition(
+    @WrapOperation(
         method = "register(Lnet/minecraft/core/Registry;Lnet/minecraft/resources/ResourceKey;Ljava/lang/Object;)Ljava/lang/Object;",
         at = @At(
             value = "INVOKE",
             target = "Lnet/minecraft/core/WritableRegistry;register(Lnet/minecraft/resources/ResourceKey;Ljava/lang/Object;Lnet/minecraft/core/RegistrationInfo;)Lnet/minecraft/core/Holder$Reference;"
         )
     )
-    private static <V, T extends V> boolean dontRegisterCreateModeTabs(WritableRegistry<T> instance, ResourceKey<T> resourceKey, T t, RegistrationInfo registrationInfo) {
+    private static <V, T extends V> Holder.Reference dontRegisterCreateModeTabs(WritableRegistry<T> instance, ResourceKey<T> resourceKey, T t, RegistrationInfo registrationInfo, Operation<Holder.Reference> original) {
         Identifier id = resourceKey.identifier();
         if (!PolymerPatchBundleMod.MOD_NAMESPACES.contains(id.getNamespace())) {
-            return true;
+            return original.call(instance, resourceKey, t, registrationInfo);
         }
         var registry = (Object) instance;
         if (registry == BuiltInRegistries.CREATIVE_MODE_TAB) {
             // dont register groups
-            return false;
+            return null;
         }
-        return true;
+        return original.call(instance, resourceKey, t, registrationInfo);
     }
 
     @Inject(
@@ -85,9 +87,9 @@ public interface RegistryMixin {
         } else if (registry == BuiltInRegistries.SOUND_EVENT) {
             PolymerSoundEvent.registerOverlay((SoundEvent) object);
         } else if (registry == BuiltInRegistries.MOB_EFFECT) {
-            PolymerStatusEffect.registerOverlay((MobEffect) object);
+            PolymerMobEffect.registerOverlay((MobEffect) object);
         } else if (registry == BuiltInRegistries.CREATIVE_MODE_TAB) {
-            PolymerItemGroupUtils.registerPolymerItemGroup(id, (CreativeModeTab) object);
+            PolymerCreativeModeTabUtils.registerPolymerCreativeModeTab(id, (CreativeModeTab) object);
         }
     }
 }

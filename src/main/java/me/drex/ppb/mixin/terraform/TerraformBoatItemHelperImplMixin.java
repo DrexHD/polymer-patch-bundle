@@ -26,10 +26,9 @@ public abstract class TerraformBoatItemHelperImplMixin {
         Identifier id, ResourceKey<Item> itemKey, ResourceKey<EntityType<?>> entityTypeKey,
         Item.Properties settings, Function<Supplier<Item>, EntityType.EntityFactory<T>> factory,
         BiConsumer<Identifier, EntityType<T>> registry, CallbackInfoReturnable<BoatItem> cir,
-        @Local EntityType<?> entityType, @Local BoatItem item
+        @Local(name = "entityType") EntityType<?> entityType, @Local(name = "item") BoatItem item
     ) {
         Identifier location = entityTypeKey.identifier();
-        var vanillaType = location.getPath().contains("_chest")? EntityType.BIRCH_CHEST_BOAT : EntityType.BIRCH_BOAT;
-        PolymerEntityUtils.registerOverlay(entityType, object -> new PolyBaseEntity(vanillaType));
+        PolymerEntityUtils.registerOverlay(entityType, object -> PolyBaseEntity.createBoat(location.getPath()));
     }
 }

@@ -8,6 +8,7 @@ import eu.pb4.polymer.blocks.api.PolymerBlockResourceUtils;
 import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import me.drex.ppb.block.BlockStateModel;
+import net.fabricmc.fabric.api.networking.v1.context.PacketContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -19,7 +20,6 @@ import net.minecraft.world.level.block.state.properties.Property;
 import net.minecraft.world.level.block.state.properties.WallSide;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.NotNull;
-import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.function.Function;
 
@@ -41,8 +41,8 @@ public record WallPolymerBlock<T extends Comparable<T>>(
         value -> value
     );
 
-    private static final BlockState eastWest = PolymerBlockResourceUtils.requestEmpty(BlockModelType.EAST_WEST_GATE);
-    private static final BlockState northSouth = PolymerBlockResourceUtils.requestEmpty(BlockModelType.NORTH_SOUTH_GATE);
+    private static final BlockState eastWest = PolymerBlockResourceUtils.requestEmpty(BlockModelType.GATE_EAST_WEST);
+    private static final BlockState northSouth = PolymerBlockResourceUtils.requestEmpty(BlockModelType.GATE_NORTH_SOUTH);
 
     @Override
     public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {

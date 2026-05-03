@@ -8,6 +8,7 @@ import eu.pb4.polymer.blocks.api.PolymerBlockResourceUtils;
 import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import me.drex.ppb.block.BlockStateModel;
+import net.fabricmc.fabric.api.networking.v1.context.PacketContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,7 +19,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
-import xyz.nucleoid.packettweaker.PacketContext;
 
 import java.util.function.BiFunction;
 import java.util.function.Function;
@@ -32,7 +32,7 @@ public record BaseFactoryBlock(Function<BlockState, BlockState> blockStateFuncti
 
     public static final BaseFactoryBlock BARRIER = new BaseFactoryBlock(blockState -> Blocks.BARRIER.defaultBlockState().setValue(BlockStateProperties.WATERLOGGED, blockState.getValueOrElse(BlockStateProperties.WATERLOGGED, false)), false, (state, blockPos) -> BlockStateModel.longRange());
     public static final BaseFactoryBlock POT = new BaseFactoryBlock(Blocks.FLOWER_POT.defaultBlockState(), false, (state, blockPos) -> BlockStateModel.midRange());
-    public static final BaseFactoryBlock PLANT = new BaseFactoryBlock(PolymerBlockResourceUtils.requestEmpty(BlockModelType.PLANT_BLOCK), false, (state, blockPos) -> BlockStateModel.midRange());
+    public static final BaseFactoryBlock PLANT = new BaseFactoryBlock(PolymerBlockResourceUtils.requestEmpty(BlockModelType.PLANT), false, (state, blockPos) -> BlockStateModel.midRange());
     public static final BaseFactoryBlock CACTUS = new BaseFactoryBlock(Blocks.CACTUS.defaultBlockState(), false, (blockState, blockPos) -> null);
 
     @Override

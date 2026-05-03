@@ -36,9 +36,9 @@ public class PolymerBlockHelper {
         boolean transparent = block instanceof TransparentBlock || block instanceof StainedGlassPaneBlock;
 
         if (transparent) {
-            BlockStateModelManager.addTransparentBlock(id, block);
+            BlockStateModelManager.addBlock(id, block);
         } else {
-            BlockStateModelManager.addSolidBlock(id, block);
+            BlockStateModelManager.addBlock(id, block);
         }
 
         PolymerBlock polymerBlock = requestPolymerBlock(id, block);
@@ -85,10 +85,10 @@ public class PolymerBlockHelper {
             case SlabBlock ignored -> SlabPolymerBlock.of(id);
             case FlowerPotBlock ignored -> ResourcePackGenerator.expandBlockModel(id, BaseFactoryBlock.POT);
             case WaterloggedTransparentBlock ignored -> BaseFactoryBlock.BARRIER;
-            case LeavesBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.BIOME_TRANSPARENT_BLOCK);
-            case SnowyDirtBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
+            case LeavesBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.BIOME_COLORED_LEAVES);
+//            case SnowyDirtBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
             case ColoredFallingBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
-            case FarmBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FARMLAND_BLOCK);
+            case FarmlandBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FARMLAND);
             case VegetationBlock ignored -> BaseFactoryBlock.PLANT;
             default -> {
                 if (block.getClass().equals(Block.class)) {

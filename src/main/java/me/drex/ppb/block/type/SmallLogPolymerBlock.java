@@ -13,6 +13,7 @@ import eu.pb4.polymer.resourcepack.api.PolymerResourcePackUtils;
 import eu.pb4.polymer.resourcepack.extras.api.format.model.ModelAsset;
 import eu.pb4.polymer.virtualentity.api.ElementHolder;
 import me.drex.ppb.PolymerPatchBundleMod;
+import net.fabricmc.fabric.api.networking.v1.context.PacketContext;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.resources.Identifier;
@@ -26,7 +27,6 @@ import net.minecraft.world.level.block.RotatedPillarBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.BlockHitResult;
 import org.jetbrains.annotations.Nullable;
-import xyz.nucleoid.packettweaker.PacketContext;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -162,7 +162,7 @@ public record SmallLogPolymerBlock(
 
     public static SmallLogPolymerBlock of(Identifier id) {
         Map<Direction.Axis, BlockState> clientBlock = new HashMap<>();
-        Map<String, String> textures = new HashMap<>();
+        Map<String, ModelAsset.TextureSlot> textures = new HashMap<>();
         if (id.getPath().contains("oak_log")) {
             BlockState state = (id.getPath().contains("stripped") ? Blocks.STRIPPED_OAK_LOG : Blocks.OAK_LOG).defaultBlockState();
             for (Direction.Axis value : Direction.Axis.values()) {
@@ -170,11 +170,11 @@ public record SmallLogPolymerBlock(
             }
             return new SmallLogPolymerBlock(clientBlock);
         } else {
-            textures.put("end", id.withPrefix("block/").withSuffix("_top").toString());
-            textures.put("side", id.withPrefix("block/").toString());
+            textures.put("end", new ModelAsset.TextureValue(id.withPrefix("block/").withSuffix("_top"), false));
+            textures.put("side", new ModelAsset.TextureValue(id.withPrefix("block/"), false));
         }
 
-        textures.forEach((key, value) -> USED_TEXTURES.add(Identifier.parse(value)));
+        textures.forEach((key, textureSlot) -> USED_TEXTURES.add(((ModelAsset.TextureValue)textureSlot).sprite()));
         {
 
             ModelAsset modelAsset = new ModelAsset(Optional.of(Identifier.withDefaultNamespace("block/cube_column")), Optional.empty(), textures);
