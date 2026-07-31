@@ -36,9 +36,9 @@ public class ResourceHelper {
 
     public static void init(ResourcePackBuilder packBuilder) {
         GLOBAL_ASSETS.locateFiles("").forEach(tuple -> {
-            Identifier id = tuple.getA();
+            Identifier id = tuple.getFirst();
             if (!PolymerPatchBundleMod.MOD_ASSET_IDS.contains(id.getNamespace())) return;
-            IoSupplier<InputStream> ioSupplier = tuple.getB();
+            IoSupplier<InputStream> ioSupplier = tuple.getSecond();
 
             try {
                 byte[] data = IOUtils.toByteArray(ioSupplier.get());

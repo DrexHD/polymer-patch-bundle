@@ -1,5 +1,6 @@
 package me.drex.ppb.block.type;
 
+import com.mojang.datafixers.util.Pair;
 import eu.pb4.factorytools.api.block.model.generic.BSMMParticleBlock;
 import eu.pb4.factorytools.api.block.FactoryBlock;
 import eu.pb4.factorytools.api.block.model.generic.BlockStateModelManager;
@@ -17,7 +18,6 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.resources.Identifier;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.util.Tuple;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.block.Block;
@@ -44,17 +44,17 @@ public record StatePolymerBlock(Map<BlockState, BlockState> map,
         try {
             BlockStateAsset blockStateAsset = ResourceHelper.decodeBlockState(id);
 
-            var list = new ArrayList<Tuple<BlockStatePredicate, List<StateModelVariant>>>();
+            var list = new ArrayList<Pair<BlockStatePredicate, List<StateModelVariant>>>();
             var cache = new HashMap<List<StateModelVariant>, BlockState>();
 
 
-            BlockStateModelManager.parseVariants(block, blockStateAsset.variants().orElseThrow(), (a, b) -> list.add(new Tuple<>(a, b)));
+            BlockStateModelManager.parseVariants(block, blockStateAsset.variants().orElseThrow(), (a, b) -> list.add(new Pair<>(a, b)));
             var map = new IdentityHashMap<BlockState, BlockState>();
 
             for (var state : block.getStateDefinition().getPossibleStates()) {
                 for (var pair : list) {
-                    if (pair.getA().test(state) && canUseBlock.test(state)) {
-                        map.put(state, cache.computeIfAbsent(pair.getB(), c -> PolymerBlockResourceUtils.requestBlock(
+                    if (pair.getFirst().test(state) && canUseBlock.test(state)) {
+                        map.put(state, cache.computeIfAbsent(pair.getSecond(), c -> PolymerBlockResourceUtils.requestBlock(
                             type,
                             c.stream().map(x -> new PolymerBlockModel(x.model(), x.x(), x.y(), x.uvlock(), x.weigth())).toArray(PolymerBlockModel[]::new))));
                         break;

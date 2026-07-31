@@ -27,7 +27,6 @@ import static me.drex.ppb.PolymerPatchBundleMod.id;
 
 public class ResourcePackGenerator {
     private static final Vec3 EXPANSION = new Vec3(0.08, 0.08, 0.08);
-    public static final Set<Identifier> SIGNS = new HashSet<>();
     public static final Set<Identifier> EXPANDABLE_MODELS = new HashSet<>();
 
     public static void setup() {
@@ -137,8 +136,6 @@ public class ResourcePackGenerator {
             }
             return resource;
         });
-
-        SIGNS.forEach(id -> ModelModifiers.createSignModel(builder, id.getNamespace(), id.getPath(), atlas));
 
         builder.addData("assets/minecraft/atlases/blocks.json", atlas.build());
     }

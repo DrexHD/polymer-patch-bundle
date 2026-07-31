@@ -1,6 +1,5 @@
 package me.drex.ppb.block;
 
-import eu.pb4.factorytools.api.block.model.SignModel;
 import eu.pb4.factorytools.api.block.model.generic.BlockStateModelManager;
 import eu.pb4.polymer.blocks.api.BlockModelType;
 import eu.pb4.polymer.blocks.api.PolymerBlockModel;
@@ -46,13 +45,6 @@ public class PolymerBlockHelper {
         if (polymerBlock instanceof BlockWithElementHolder blockWithElementHolder) {
             BlockWithElementHolder.registerOverlay(block, blockWithElementHolder);
         }
-
-        if (block instanceof SignBlock) {
-            SignModel.setModel(block, id.withPrefix("block_sign/"));
-        }
-        if (block.getClass().equals(StandingSignBlock.class)) {
-            ResourcePackGenerator.SIGNS.add(id.withPath(id.getPath().replace("_sign", "")));
-        }
     }
 
     public static PolymerBlock requestPolymerBlock(Identifier id, Block block) {
@@ -73,10 +65,10 @@ public class PolymerBlockHelper {
             case BasePressurePlateBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.PRESSURE_PLATE);
             case CarpetBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.CARPET);
             case ShelfBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.SHELF);
-            case WallSignBlock ignored -> StateCopyFactoryBlock.WALL_SIGN;
-            case WallHangingSignBlock ignored -> StateCopyFactoryBlock.HANGING_WALL_SIGN;
-            case CeilingHangingSignBlock ignored -> StateCopyFactoryBlock.HANGING_SIGN;
-            case StandingSignBlock ignored -> StateCopyFactoryBlock.SIGN;
+            case WallSignBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.WALL_SIGN);
+            case WallHangingSignBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.HANGING_WALL_SIGN);
+            case CeilingHangingSignBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.HANGING_SIGN);
+            case StandingSignBlock ignored -> ResourcePackGenerator.expandBlockModel(id, StateCopyFactoryBlock.SIGN);
             case DoorBlock ignored -> DoorPolymerBlock.INSTANCE;
             case IronBarsBlock ignored -> BarsPolymerBlock.INSTANCE;
             case ChainBlock ignored -> ChainPolymerBlock.INSTANCE;

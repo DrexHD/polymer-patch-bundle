@@ -25,7 +25,7 @@ public record BranchPolymerBlock() implements FactoryBlock, PolymerTexturedBlock
 
     @Override
     public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
-        BlockState clientState = Blocks.LIGHTNING_ROD.defaultBlockState();
+        BlockState clientState = Blocks.LIGHTNING_ROD.waxed().unaffected().defaultBlockState();
         Direction.Axis axis = blockState.getValue(BranchBlock.AXIS);
         if (axis == Direction.Axis.X) {
             clientState = clientState.setValue(LightningRodBlock.FACING, Direction.EAST);

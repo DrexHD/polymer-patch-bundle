@@ -25,7 +25,7 @@ public class BlockusPolymerBlockHelper implements ModPolymerBlockHelper {
             case StainedGlassBlock ignored -> BaseFactoryBlock.BARRIER;
             case ChocolateTabletBlock ignored -> ChocolateTabletPolymerBlock.INSTANCE;
             case ColoredTilesBlock ignored -> BaseFactoryBlock.BARRIER;
-            case SmallHedgeBlock ignored -> WallPolymerBlock.HEDGE;
+//            case SmallHedgeBlock ignored -> WallPolymerBlock.HEDGE;
             case Barrier ignored -> WallPolymerBlock.BARRIER;
             case OrientableBlockBase ignored -> BaseFactoryBlock.BARRIER;
             case RedstoneLampBlock ignored -> BaseFactoryBlock.BARRIER;

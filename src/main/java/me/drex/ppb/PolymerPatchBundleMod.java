@@ -91,9 +91,6 @@ public class PolymerPatchBundleMod implements ModInitializer {
 
     public static void setupModAssets(String modid) {
         ResourcePackExtras.forDefault().addBridgedModelsFolder(
-            Identifier.fromNamespaceAndPath(modid, "block_sign")
-        );
-        ResourcePackExtras.forDefault().addBridgedModelsFolder(
             Identifier.fromNamespaceAndPath(modid, "block"),
             (id, resourcePackBuilder) -> {
                 return new ItemAsset(new BasicItemModel(id, List.of(new MapColorTintSource(0xFFFFFF))), ItemAsset.Properties.DEFAULT);

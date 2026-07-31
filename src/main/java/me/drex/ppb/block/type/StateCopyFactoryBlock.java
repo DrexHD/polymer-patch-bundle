@@ -1,7 +1,6 @@
 package me.drex.ppb.block.type;
 
 import eu.pb4.factorytools.api.block.FactoryBlock;
-import eu.pb4.factorytools.api.block.model.SignModel;
 import eu.pb4.factorytools.api.block.model.generic.BSMMParticleBlock;
 import eu.pb4.factorytools.api.virtualentity.BlockModel;
 import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
@@ -23,10 +22,10 @@ import java.util.function.BiFunction;
 
 public record StateCopyFactoryBlock(Block clientBlock,
                                     BiFunction<BlockState, BlockPos, BlockModel> modelFunction) implements FactoryBlock, PolymerTexturedBlock, BSMMParticleBlock {
-    public static final StateCopyFactoryBlock SIGN = new StateCopyFactoryBlock(Blocks.BIRCH_SIGN, SignModel::new);
-    public static final StateCopyFactoryBlock WALL_SIGN = new StateCopyFactoryBlock(Blocks.BIRCH_WALL_SIGN, SignModel::new);
-    public static final StateCopyFactoryBlock HANGING_SIGN = new StateCopyFactoryBlock(Blocks.BIRCH_HANGING_SIGN, SignModel::new);
-    public static final StateCopyFactoryBlock HANGING_WALL_SIGN = new StateCopyFactoryBlock(Blocks.BIRCH_WALL_HANGING_SIGN, SignModel::new);
+    public static final StateCopyFactoryBlock SIGN = new StateCopyFactoryBlock(Blocks.BIRCH_SIGN, (state, blockPos) -> BlockStateModel.midRange().shifty());
+    public static final StateCopyFactoryBlock WALL_SIGN = new StateCopyFactoryBlock(Blocks.BIRCH_WALL_SIGN, (state, blockPos) -> BlockStateModel.midRange().shifty());
+    public static final StateCopyFactoryBlock HANGING_SIGN = new StateCopyFactoryBlock(Blocks.BIRCH_HANGING_SIGN, (state, blockPos) -> BlockStateModel.midRange().shifty());
+    public static final StateCopyFactoryBlock HANGING_WALL_SIGN = new StateCopyFactoryBlock(Blocks.BIRCH_WALL_HANGING_SIGN, (state, blockPos) -> BlockStateModel.midRange().shifty());
 
     public static final StateCopyFactoryBlock WALL = new StateCopyFactoryBlock(Blocks.SANDSTONE_WALL, (state, blockPos) -> BlockStateModel.midRange().shifty());
     public static final StateCopyFactoryBlock STAIR = new StateCopyFactoryBlock(Blocks.SANDSTONE_STAIRS, (state, blockPos) -> BlockStateModel.midRange().shifty());
@@ -34,7 +33,7 @@ public record StateCopyFactoryBlock(Block clientBlock,
     public static final StateCopyFactoryBlock FENCE_GATE = new StateCopyFactoryBlock(Blocks.BIRCH_FENCE_GATE, (state, blockPos) -> BlockStateModel.midRange().shifty());
     public static final StateCopyFactoryBlock BUTTON = new StateCopyFactoryBlock(Blocks.STONE_BUTTON, (state, blockPos) -> BlockStateModel.shortRange().shifty());
     public static final StateCopyFactoryBlock PRESSURE_PLATE = new StateCopyFactoryBlock(Blocks.STONE_PRESSURE_PLATE, (state, blockPos) -> BlockStateModel.shortRange().shifty());
-    public static final StateCopyFactoryBlock CARPET = new StateCopyFactoryBlock(Blocks.WHITE_CARPET, (state, blockPos) -> BlockStateModel.shortRange().shifty());
+    public static final StateCopyFactoryBlock CARPET = new StateCopyFactoryBlock(Blocks.CARPET.white(), (state, blockPos) -> BlockStateModel.shortRange().shifty());
     public static final StateCopyFactoryBlock SHELF = new StateCopyFactoryBlock(Blocks.BIRCH_SHELF, (state, blockPos) -> BlockStateModel.shortRange().shifty());
     public static final StateCopyFactoryBlock TRAPDOOR = new StateCopyFactoryBlock(Blocks.IRON_TRAPDOOR, (state, blockPos) -> BlockStateModel.midRange().shifty());
 
