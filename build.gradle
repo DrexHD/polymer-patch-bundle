@@ -49,7 +49,7 @@ dependencies {
 
 	implementation include("eu.pb4:factorytools:${project.factorytools_version}")
 	implementation include("nl.theepicblock:resource-locator-api:${project.resource_locator_version}")
-    implementation 'com.github.ramixin:mixson-fabric:2.1.0'
+    implementation include("com.github.ramixin:mixson-fabric:2.1.0")
 
 	implementation "eu.pb4:polymer-core:${project.polymer_version}"
 	implementation("eu.pb4:polymer-blocks:${project.polymer_version}")
