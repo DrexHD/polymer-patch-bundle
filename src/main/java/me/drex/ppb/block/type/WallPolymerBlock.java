@@ -1,5 +1,6 @@
 package me.drex.ppb.block.type;
 
+import com.brand.blockus.blocks.base.HedgeBlock;
 import eu.pb4.factorytools.api.block.FactoryBlock;
 import eu.pb4.factorytools.api.block.model.generic.BSMMParticleBlock;
 import eu.pb4.polymer.blocks.api.BlockModelType;
@@ -34,11 +35,11 @@ public record WallPolymerBlock<T extends Comparable<T>>(
         value -> value != WallSide.NONE
     );
 
-//    public static final WallPolymerBlock<Boolean> HEDGE = new WallPolymerBlock<>(
-//        SmallHedgeBlock.NORTH, SmallHedgeBlock.EAST,
-//        SmallHedgeBlock.SOUTH, SmallHedgeBlock.WEST,
-//        value -> value
-//    );
+    public static final WallPolymerBlock<Boolean> HEDGE = new WallPolymerBlock<>(
+        HedgeBlock.NORTH, HedgeBlock.EAST,
+        HedgeBlock.SOUTH, HedgeBlock.WEST,
+        value -> value
+    );
 
     private static final BlockState eastWest = PolymerBlockResourceUtils.requestEmpty(BlockModelType.GATE_EAST_WEST);
     private static final BlockState northSouth = PolymerBlockResourceUtils.requestEmpty(BlockModelType.GATE_NORTH_SOUTH);

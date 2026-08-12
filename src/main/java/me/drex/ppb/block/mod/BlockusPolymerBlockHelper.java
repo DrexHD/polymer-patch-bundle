@@ -2,7 +2,6 @@ package me.drex.ppb.block.mod;
 
 import com.brand.blockus.blocks.base.*;
 import com.brand.blockus.blocks.base.asphalt.AsphaltBlock;
-import com.terraformersmc.cinderscapes.block.PolypiteQuartzBlock;
 import eu.pb4.polymer.blocks.api.BlockModelType;
 import eu.pb4.polymer.core.api.block.PolymerBlock;
 import me.drex.ppb.block.type.*;
@@ -25,7 +24,7 @@ public class BlockusPolymerBlockHelper implements ModPolymerBlockHelper {
             case StainedGlassBlock ignored -> BaseFactoryBlock.BARRIER;
             case ChocolateTabletBlock ignored -> ChocolateTabletPolymerBlock.INSTANCE;
             case ColoredTilesBlock ignored -> BaseFactoryBlock.BARRIER;
-//            case SmallHedgeBlock ignored -> WallPolymerBlock.HEDGE;
+            case HedgeBlock ignored -> WallPolymerBlock.HEDGE;
             case Barrier ignored -> WallPolymerBlock.BARRIER;
             case OrientableBlockBase ignored -> BaseFactoryBlock.BARRIER;
             case RedstoneLampBlock ignored -> BaseFactoryBlock.BARRIER;

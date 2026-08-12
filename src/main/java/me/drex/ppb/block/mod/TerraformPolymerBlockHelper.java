@@ -1,5 +1,6 @@
 package me.drex.ppb.block.mod;
 
+import com.terraformersmc.terraform.dirt.api.block.TerraformDirtPathBlock;
 import com.terraformersmc.terraform.leaves.api.block.LeafPileBlock;
 import com.terraformersmc.terraform.wood.api.block.QuarterLogBlock;
 import com.terraformersmc.terraform.wood.api.block.SmallLogBlock;
@@ -28,7 +29,7 @@ public class TerraformPolymerBlockHelper implements ModPolymerBlockHelper {
                 yield BaseFactoryBlock.BARRIER;
             }
             case RotatedPillarBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FULL_BLOCK);
-//            case TerraformDirtPathBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FARMLAND);
+            case TerraformDirtPathBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.FARMLAND);
             case LeafPileBlock ignored -> StatePolymerBlock.of(id, block, BlockModelType.TRIPWIRE_FLAT);
             default -> null;
         };
