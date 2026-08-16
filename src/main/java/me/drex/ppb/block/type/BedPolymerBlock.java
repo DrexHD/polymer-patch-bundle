@@ -1,0 +1,60 @@
+package me.drex.ppb.block.type;
+
+import eu.pb4.factorytools.api.block.FactoryBlock;
+import eu.pb4.factorytools.api.block.model.generic.BSMMParticleBlock;
+import eu.pb4.polymer.blocks.api.BlockModelType;
+import eu.pb4.polymer.blocks.api.PolymerBlockResourceUtils;
+import eu.pb4.polymer.blocks.api.PolymerTexturedBlock;
+import eu.pb4.polymer.virtualentity.api.ElementHolder;
+import me.drex.ppb.block.BlockStateModel;
+import net.fabricmc.fabric.api.networking.v1.context.PacketContext;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
+import net.minecraft.server.level.ServerLevel;
+import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.InteractionHand;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BedPart;
+import net.minecraft.world.level.block.state.properties.BlockStateProperties;
+import net.minecraft.world.phys.BlockHitResult;
+import org.apache.commons.lang3.ArrayUtils;
+import org.jetbrains.annotations.NotNull;
+
+public record BedPolymerBlock() implements FactoryBlock, PolymerTexturedBlock, BSMMParticleBlock {
+    private static final BlockState[] EMPTY_STATES = new BlockState[8];
+    private static final Direction[] DIRECTIONS = new Direction[]{Direction.NORTH, Direction.EAST, Direction.SOUTH, Direction.WEST};
+
+    public static final BedPolymerBlock INSTANCE = new BedPolymerBlock();
+
+    static {
+        int index = 0;
+        for (Direction direction : DIRECTIONS) {
+            for (BedPart bedPart : BedPart.values()) {
+                EMPTY_STATES[index] = PolymerBlockResourceUtils.requestEmpty(BlockModelType.getBed(direction, bedPart));
+                index++;
+            }
+        }
+    }
+
+    @Override
+    public BlockState getPolymerBlockState(BlockState blockState, PacketContext packetContext) {
+        Direction direction = blockState.getValueOrElse(BlockStateProperties.HORIZONTAL_FACING, Direction.NORTH);
+        BedPart bedPart = blockState.getValueOrElse(BlockStateProperties.BED_PART, BedPart.HEAD);
+
+        int i = ArrayUtils.indexOf(DIRECTIONS, direction) * 2;
+        i += bedPart.ordinal();
+
+        return EMPTY_STATES[i];
+    }
+
+    @Override
+    public @NotNull ElementHolder createElementHolder(ServerLevel world, BlockPos pos, BlockState initialBlockState) {
+        return BlockStateModel.midRange();
+    }
+
+    @Override
+    public boolean isIgnoringBlockInteractionPlaySoundExceptedEntity(BlockState state, ServerPlayer player, InteractionHand hand, ItemStack stack, ServerLevel world, BlockHitResult blockHitResult) {
+        return true;
+    }
+}

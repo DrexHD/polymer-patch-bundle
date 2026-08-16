@@ -74,6 +74,7 @@ public class PolymerBlockHelper {
             case ChainBlock ignored -> ChainPolymerBlock.INSTANCE;
             case LanternBlock ignored -> LanternPolymerBlock.INSTANCE;
             case TrapDoorBlock ignored -> TrapdoorPolymerBlock.INSTANCE;
+            case BedBlock ignored -> BedPolymerBlock.INSTANCE;
             case SlabBlock ignored -> SlabPolymerBlock.of(id);
             case FlowerPotBlock ignored -> ResourcePackGenerator.expandBlockModel(id, BaseFactoryBlock.POT);
             case WaterloggedTransparentBlock ignored -> BaseFactoryBlock.BARRIER;
