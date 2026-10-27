@@ -13,7 +13,7 @@ import net.minecraft.core.component.DataComponents;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.item.ItemDisplayContext;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.component.MapItemColor;
+import net.minecraft.world.item.component.DyedItemColor;
 import net.minecraft.world.phys.Vec3;
 import org.jetbrains.annotations.Nullable;
 
@@ -101,7 +101,7 @@ public class BlockStateModel extends BlockModel {
         int color = ColorProviderRegistry.getColor(this.blockState(), blockBoundAttachment.getChunk(), pos);
         if (color != -1) {
             ItemStack item = element.getItem().copy();
-            item.set(DataComponents.MAP_COLOR, new MapItemColor(color));
+            item.set(DataComponents.DYED_COLOR, new DyedItemColor(color));
             element.setItem(item);
         }
 
